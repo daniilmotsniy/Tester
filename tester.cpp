@@ -6,13 +6,13 @@
 #include <string>
 
 using namespace std; 
-
 const int N = 100;
 
 int main ()
 {
-	vector<string> answers;
-	{
+	vector<string> answers; //Array with answers
+	
+	{	// Block that allow to find answers
 		FILE *T;
 		char str[N];
 		char *estr;
@@ -48,27 +48,7 @@ int main ()
 			
 			fclose(T);
 	}
-	
-	FILE *T1;
-	char *estr1;
-	char str[N];
-	
-		T1 = fopen("text.txt", "r");
-	
-		if (T1 == NULL) {printf ("Error\n"); return -1;}
-	
-		while (1)
-		   {
-			  estr1 = fgets(str,sizeof(str),T1);
-	
-		      if (estr1 == NULL)
-		      {
-		            break;
-		      }
-				puts(str);
-		   }
-	
-		if ( fclose (T1) == EOF) printf ("Error \n");
+
 
 
 
