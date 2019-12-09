@@ -10,43 +10,61 @@ const int N = 100;
 
 int main ()
 {
-	vector<string> answers; //Array with answers
-	
-	{	// Block that allow to find answers
+	vector<char> answers; //array with answers
+	vector<string> all;
+	vector<char> input;
+	{	// block that allow to find answers
 		FILE *T;
 		char str[N];
 		char *estr;
+		int i, j;
 		
 			T = fopen("text.txt", "r");
-		
 			if (T == NULL) {printf ("Error\n"); return -1;}
 		
-			while (1)
+			for(i = 0; 1; i++)
 			   {
 				  estr = fgets(str,sizeof(str),T);
-		
 			      if (estr == NULL)
 			      {
-			            break;
+					break;
 			      }
-					puts(str);
+
+					int flag = strchr(str, '+') - str ; // finding number of '+'
 					
 					if(strstr(str, "+")){
-						answers.push_back(str);
+						for(i = flag; i < N; i++){
+							str[i] = 0;
+						}
+						answers.push_back(str[0]);
 					}
-					
-					for(int i =0; i < N; i++){
-		   				str[i] = 0;
+					if (str[0] != '\n' && str[1] != 0) {
+						all.push_back(str);
 					}
 			   }
-		
-			if ( fclose (T) == EOF) printf ("Error \n");
-		   
-			for (int i = 0; i < N; i++) {
-		        std::cout << answers[i] << std::endl; 
+			   
+			cout << all.size() << endl;
+			
+			puts("\n***********\n");
+			
+				for(j = 0; j < all.size()/4; j++){
+					for (i = 0; i < 4; i++) {
+						if (i % 4) {
+							cout << all[i] << endl;
+						} else {
+							cout << "Question: " << all[i] << endl;
+						}
+					}
+					cin >> input[j];
+				}
+	
+			puts("\n***********\n");
+			
+			for (i = 0; i < answers.size(); ++i) {
+				cout << answers[i] << ' ';
 			}
 			
-			fclose(T);
+			if ( fclose (T) == EOF) printf ("Error \n");
 	}
 
 

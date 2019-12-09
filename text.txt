@@ -1,11 +1,14 @@
 How are you?
-I`m fine +
-Good
-Cool
+1) I`m fine +
+2) Good
+3) Cool
 
 Where are u now?
-Here
-There +
-At home
+1) Here
+2) There +
+3) At home
 
-
+What are u doing?
+1) Seeing
+2) Playing
+3) Jumping +
