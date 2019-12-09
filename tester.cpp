@@ -36,7 +36,7 @@ int main ()
 						for(i = flag; i < N; i++){
 							str[i] = 0;
 						}
-						answers.push_back(str[0]);
+						answers.push_back(str[0]);	// space after the right answer
 					}
 					if (str[0] != '\n' && str[1] != 0) {
 						all.push_back(str);
@@ -55,7 +55,7 @@ int main ()
 							cout << "Question: " << all[i] << endl;
 						}
 					}
-					cin >> input[j];
+					cin >> input[j];	// here is truble
 				}
 	
 			puts("\n***********\n");
