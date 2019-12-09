@@ -1,5 +1,5 @@
 How are you?
-1) I`m fine +
+1) I`m fine
 2) Good
 3) Cool
 

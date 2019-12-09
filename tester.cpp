@@ -16,8 +16,9 @@ int main ()
 	{	// block that allow to find answers
 		FILE *T;
 		char str[N];
-		char *estr;
-		int i, j;
+		char *estr, tmp;
+		int i, j, result = 0;
+		
 		
 			T = fopen("text.txt", "r");
 			if (T == NULL) {printf ("Error\n"); return -1;}
@@ -33,36 +34,41 @@ int main ()
 					int flag = strchr(str, '+') - str ; // finding number of '+'
 					
 					if(strstr(str, "+")){
-						for(i = flag; i < N; i++){
+						for(i = flag; i < N; ++i){
 							str[i] = 0;
 						}
-						answers.push_back(str[0]);	// space after the right answer
+						str[strlen(str)] = '\n';	// adding \n after right answer
+						answers.push_back(str[0]);
 					}
+					
 					if (str[0] != '\n' && str[1] != 0) {
 						all.push_back(str);
 					}
 			   }
-			   
-			cout << all.size() << endl;
+
+			puts("\nWelcome to test\n");
 			
-			puts("\n***********\n");
-			
-				for(j = 0; j < all.size()/4; j++){
-					for (i = 0; i < 4; i++) {
+				for(j = 0; j < all.size()/4; ++j){
+					for (i = 0; i < 4; ++i) {
 						if (i % 4) {
-							cout << all[i] << endl;
+							cout << all[i + j*4] << endl;
 						} else {
-							cout << "Question: " << all[i] << endl;
+							cout << "Question: " << all[i + j*4] << endl;
 						}
 					}
-					cin >> input[j];	// here is truble
+					cin >> tmp;	//fixed
+					input.push_back(tmp);
 				}
 	
-			puts("\n***********\n");
+			puts("\nEnd of the test\n");
 			
 			for (i = 0; i < answers.size(); ++i) {
-				cout << answers[i] << ' ';
+				if(answers[i] == input[i]){
+					result++;
+				}
 			}
+			
+			cout << "Your result is: " << result << endl;
 			
 			if ( fclose (T) == EOF) printf ("Error \n");
 	}
