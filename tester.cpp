@@ -1,15 +1,18 @@
 #include <stdio.h>  
 #include <stdlib.h>
+#include <locale.h>
 #include <iostream> 
 #include <cstring> 
 #include <vector>
 #include <string>
 
-using namespace std; 
-const int N = 100;
+using namespace std;
+const int N = 1000;
 
 int main ()
 {
+	setlocale(LC_ALL, "Rus");
+	
 	vector<char> answers; //array with answers
 	vector<string> all;
 	vector<char> input;
@@ -19,9 +22,8 @@ int main ()
 		char *estr, tmp;
 		int i, j, result = 0;
 		
-		
 			T = fopen("text.txt", "r");
-			if (T == NULL) {printf ("Error\n"); return -1;}
+			if (T == NULL) {printf ("Строка не найдена\n"); return -1;}
 		
 			for(i = 0; 1; i++)
 			   {
@@ -45,22 +47,30 @@ int main ()
 						all.push_back(str);
 					}
 			   }
+			   
+			if ( fclose (T) == EOF) printf ("Error \n");
 
-			puts("\nWelcome to test\n");
+			puts("\nНачало теста\n");
 			
 				for(j = 0; j < all.size()/4; ++j){
 					for (i = 0; i < 4; ++i) {
 						if (i % 4) {
 							cout << all[i + j*4] << endl;
 						} else {
-							cout << "Question: " << all[i + j*4] << endl;
+							cout << "Вопрос: " << all[i + j*4] << endl;
 						}
 					}
 					cin >> tmp;	//fixed
-					input.push_back(tmp);
+					cout << endl;
+					if(tmp > 3 || tmp < 1){
+						puts("Некоректный ответ!");
+						cin >> tmp;
+					} else{
+						input.push_back(tmp);
+					}
 				}
 	
-			puts("\nEnd of the test\n");
+			puts("\nКонец теста\n");
 			
 			for (i = 0; i < answers.size(); ++i) {
 				if(answers[i] == input[i]){
@@ -68,9 +78,19 @@ int main ()
 				}
 			}
 			
-			cout << "Your result is: " << result << endl;
+			result = (result*100)/answers.size();
+			cout << "Ваш результат: " << result << "%" << endl << endl;
 			
-			if ( fclose (T) == EOF) printf ("Error \n");
+			if(result > 90 && result <= 100){
+				printf("Отлично");
+			} else if(result > 70 && result <= 90){
+				printf("Хорошо");
+			} else if(result > 50 && result <= 70){
+				printf("Удовлетворительно");
+			} else {
+				printf("Неудовлетворительно");
+			}
+			
 	}
 
 
