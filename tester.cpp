@@ -23,13 +23,14 @@ int main ()
 		int i, j, result = 0;
 		
 			T = fopen("text.txt", "r");
-			if (T == NULL) {printf ("Строка не найдена\n"); return -1;}
+			if (T == NULL) {printf ("Stroke has not found\n"); return -1;}
 		
 			for(i = 0; 1; i++)
 			   {
 				  estr = fgets(str,sizeof(str),T);
 			      if (estr == NULL)
 			      {
+			      	puts("Error");
 					break;
 			      }
 
@@ -50,27 +51,22 @@ int main ()
 			   
 			if ( fclose (T) == EOF) printf ("Error \n");
 
-			puts("\nНачало теста\n");
+			puts("\nBegining of the test\n");
 			
 				for(j = 0; j < all.size()/4; ++j){
 					for (i = 0; i < 4; ++i) {
 						if (i % 4) {
 							cout << all[i + j*4] << endl;
 						} else {
-							cout << "Вопрос: " << all[i + j*4] << endl;
+							cout << "Question: " << all[i + j*4] << endl;
 						}
 					}
 					cin >> tmp;	//fixed
 					cout << endl;
-					if(tmp > 3 || tmp < 1){
-						puts("Некоректный ответ!");
-						cin >> tmp;
-					} else{
-						input.push_back(tmp);
-					}
+					input.push_back(tmp);
 				}
 	
-			puts("\nКонец теста\n");
+			puts("\nEnd of the test\n");
 			
 			for (i = 0; i < answers.size(); ++i) {
 				if(answers[i] == input[i]){
@@ -79,16 +75,16 @@ int main ()
 			}
 			
 			result = (result*100)/answers.size();
-			cout << "Ваш результат: " << result << "%" << endl << endl;
+			cout << "Your result: " << result << "%" << endl << endl;
 			
 			if(result > 90 && result <= 100){
-				printf("Отлично");
+				printf("Nice");
 			} else if(result > 70 && result <= 90){
-				printf("Хорошо");
+				printf("Well");
 			} else if(result > 50 && result <= 70){
-				printf("Удовлетворительно");
+				printf("Good");
 			} else {
-				printf("Неудовлетворительно");
+				printf("Bad");
 			}
 			
 	}
