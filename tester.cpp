@@ -28,14 +28,24 @@ int main ()
 	
 	int i, j; //variables
 	char tmp;
+	char* student_data;
 	
-		FILE *T; //File
+		FILE *T, *S; //Files of test and student
 		char str[N];
 		char *estr;
 		
-		puts("\nНачало теста, введите путь к документу с тестом\n");
+		S = fopen("students/students.txt", "w");
+		puts("\nНачало теста, введите фамилию, номер грпуппы и инициалы\n");
+		gets(student_data);
+		fprintf(S, "%s\n", student_data);
+		fclose(S);
+		
+		puts("\nВведите путь к документу с тестом\n");
 		gets(test_path);
-
+		
+		system("pause");
+		system("cls\n");
+		
 		T = fopen(test_path, "r");
 		puts("\n");
 		
