@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Controller {
 
     @FXML
@@ -20,6 +23,7 @@ public class Controller {
             } else {
                 label_question.setText("");
             }
+
         });
 
     }
