@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Controller {
+public class Test {
 
     @FXML
     private Label label_question;
@@ -23,7 +23,6 @@ public class Controller {
             } else {
                 label_question.setText("");
             }
-
         });
 
     }
