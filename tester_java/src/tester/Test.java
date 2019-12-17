@@ -4,20 +4,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class Test {
 
     @FXML
     private Label label_question;
 
     @FXML
-    private Button btn_check;
+    private Button btn_prev;
+
+    @FXML
+    private Button btn_next;
 
     @FXML
     void initialize() {
-        btn_check.setOnAction(event -> {
+        btn_next.setOnAction(event -> {
             if(label_question.getText().isEmpty()){
                 label_question.setText("Hi!");
             } else {

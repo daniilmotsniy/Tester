@@ -8,7 +8,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -43,7 +42,7 @@ public class Login {
                 } else {
                     lbl_error.setText("");
 
-                    try(FileWriter writer = new FileWriter("res/students.txt", false))      // get name
+                    try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
                     {
                         String name_str = txt_field_name.getText();
                         String group_str = cmb_group.getSelectionModel().getSelectedItem();
@@ -53,6 +52,7 @@ public class Login {
                         writer.write(group_str);
                         writer.append('\t');
                         writer.write(current_time);
+                        writer.append('\n');
                     }
                     catch(IOException ex){
                         System.out.println(ex.getMessage());
