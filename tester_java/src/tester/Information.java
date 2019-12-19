@@ -27,4 +27,10 @@ public class Information {
                 }
         }
 
+        void getText(){
+                for(int i = 0; i < text.size(); i++){
+                        System.out.println(text.get(i));
+                }
+        }
+
 }
