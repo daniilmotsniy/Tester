@@ -3,6 +3,8 @@ package tester;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -12,6 +14,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static jdk.nashorn.internal.codegen.OptimisticTypesPersistence.load;
 
 public class Login {
 
@@ -57,8 +61,10 @@ public class Login {
                     catch(IOException ex){
                         System.out.println(ex.getMessage());
                     }
-
                 }
+
+                load(getClass().getResource("test.fxml"));
+
         });
 
     }

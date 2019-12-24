@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         primaryStage.setTitle("Tester");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
@@ -22,16 +22,13 @@ public class Main extends Application {
 
     public static void main(String[] args) throws  Exception{
 
-      /*  Information txt = new Information();
-        txt.getText("res/tests/test1.txt");
-        txt.printText(); */
-
-            Vector<String> text = null;
+        Information txt = new Information();
 
             FileReader reader = new FileReader("res/tests/test1.txt");
 
             Scanner scan = new Scanner(reader);
 
+            /*
             while (scan.hasNextLine()) {
                 text.addElement(scan.nextLine());
             }
@@ -40,10 +37,8 @@ public class Main extends Application {
 
             for(int i = 0; i < text.size(); i++){
                 System.out.println(text.get(i));
-            }
+            } */
 
-
-
-        launch(args);
+            launch(args);
     }
 }
