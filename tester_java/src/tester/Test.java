@@ -23,6 +23,12 @@ public class Test {
 
     @FXML
     void initialize() throws Exception {
+
+        getText("res/tests/test1.txt");
+        printText(text);
+
+        label_question.setText(text.elementAt(2));
+
         btn_next.setOnAction(event -> {
             if(label_question.getText().isEmpty()){
                 label_question.setText("Hi!");
@@ -30,9 +36,6 @@ public class Test {
                 label_question.setText("");
             }
         });
-
-        getText("res/tests/test1.txt");
-        printText(text);
 
     }
 
