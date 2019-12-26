@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -14,31 +15,41 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
         primaryStage.setTitle("Tester");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
     }
 
+    public void pageLoad(String fxml_url){
+
+        //Loading new fxml
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxml_url));
+
+        //Checking for exception
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Setting parameters
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setTitle("Tester");
+        stage.show();
+        //Icon
+        //Image icon = new Image(getClass().getResourceAsStream("icon/cross.png"));
+        //stage.getIcons().add(icon);
+    }
+
     public static void main(String[] args) throws  Exception{
-
-        Information txt = new Information();
-
-            FileReader reader = new FileReader("res/tests/test1.txt");
-
-            Scanner scan = new Scanner(reader);
-
-            /*
-            while (scan.hasNextLine()) {
-                text.addElement(scan.nextLine());
-            }
-
-            reader.close();
-
-            for(int i = 0; i < text.size(); i++){
-                System.out.println(text.get(i));
-            } */
-
             launch(args);
     }
+
+
 }
+
+
