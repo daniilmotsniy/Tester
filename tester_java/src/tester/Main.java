@@ -6,10 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.Vector;
+
 
 public class Main extends Application {
 
@@ -22,6 +20,8 @@ public class Main extends Application {
     }
 
     public void pageLoad(String fxml_url){
+
+        //Here I need to close the window (login.fxml)
 
         //Loading new fxml
         FXMLLoader loader = new FXMLLoader();
