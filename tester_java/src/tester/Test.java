@@ -3,6 +3,7 @@ package tester;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 
 import java.io.FileReader;
 import java.util.Scanner;
@@ -22,12 +23,22 @@ public class Test {
     private Button btn_next;
 
     @FXML
+    private RadioButton answ_rb_1;
+    @FXML
+    private RadioButton answ_rb_2;
+    @FXML
+    private RadioButton answ_rb_3;
+
+    @FXML
     void initialize() throws Exception {
 
         getText("res/tests/test1.txt");
         printText(text);
 
-        label_question.setText(text.elementAt(2));
+        label_question.setText(text.elementAt(3));
+        answ_rb_1.setText(text.elementAt(0));
+        answ_rb_2.setText(text.elementAt(1));
+        answ_rb_3.setText(text.elementAt(2));
 
         btn_next.setOnAction(event -> {
             if(label_question.getText().isEmpty()){

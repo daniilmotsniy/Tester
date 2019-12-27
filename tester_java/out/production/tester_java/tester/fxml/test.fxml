@@ -2,18 +2,22 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
-      <Label fx:id="label_question" layoutX="109.0" layoutY="145.0" prefHeight="221.0" prefWidth="382.0" />
-      <Button fx:id="btn_next" layoutX="387.0" layoutY="413.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Наступне" />
-      <Button fx:id="btn_prev" layoutX="109.0" layoutY="413.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Попереднє" />
+      <Label fx:id="label_question" layoutX="109.0" layoutY="109.0" prefHeight="221.0" prefWidth="382.0" />
+      <Button fx:id="btn_next" layoutX="365.0" layoutY="519.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Наступне" />
+      <Button fx:id="btn_prev" layoutX="109.0" layoutY="519.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Попереднє" />
       <Label fx:id="label_question1" layoutX="261.0" layoutY="50.0" prefHeight="36.0" prefWidth="78.0" text="Питання">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <RadioButton fx:id="answ_rb_1" layoutX="109.0" layoutY="415.0" mnemonicParsing="false" text="first answ" />
+      <RadioButton fx:id="answ_rb_2" layoutX="257.0" layoutY="415.0" mnemonicParsing="false" text="sec answ" />
+      <RadioButton fx:id="answ_rb_3" layoutX="382.0" layoutY="415.0" mnemonicParsing="false" text="thrd" />
    </children>
 </AnchorPane>
