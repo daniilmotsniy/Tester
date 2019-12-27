@@ -38,12 +38,12 @@ public class Test {
         //answ_rb_1.setText(text.elementAt(0));
         //answ_rb_2.setText(text.elementAt(1));
 
-            for (int i = 0; i < 4; ++i) {
-                if (i % 4 == 1) {
-                    answ_rb_1.setText(text.elementAt(0));
-                } else {
-                    label_question.setText(text.elementAt(3));
-                }
+            for (int i = 0; i < text.size(); i+=4) {
+
+                label_question.setText(text.elementAt(i));
+                answ_rb_1.setText(text.elementAt(i+1));
+                answ_rb_1.setText(text.elementAt(i+2));
+                answ_rb_1.setText(text.elementAt(i+3));
             }
 
         btn_next.setOnAction(event -> {
