@@ -35,10 +35,16 @@ public class Test {
         getText("res/tests/test1.txt");
         printText(text);
 
-        label_question.setText(text.elementAt(3));
-        answ_rb_1.setText(text.elementAt(0));
-        answ_rb_2.setText(text.elementAt(1));
-        answ_rb_3.setText(text.elementAt(2));
+        //answ_rb_1.setText(text.elementAt(0));
+        //answ_rb_2.setText(text.elementAt(1));
+
+            for (int i = 0; i < 4; ++i) {
+                if (i % 4 == 1) {
+                    answ_rb_1.setText(text.elementAt(0));
+                } else {
+                    label_question.setText(text.elementAt(3));
+                }
+            }
 
         btn_next.setOnAction(event -> {
             if(label_question.getText().isEmpty()){
