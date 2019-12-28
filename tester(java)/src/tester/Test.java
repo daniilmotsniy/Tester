@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.FileReader;
 import java.util.Scanner;
@@ -12,7 +13,9 @@ import java.util.Vector;
 public class Test {
 
     Vector<String> text = new Vector();
-    int i = 0;
+    Vector<Integer> answers = new Vector();
+
+    int i = 0; //Number of block with questions and answers
 
     @FXML
     private Label label_question;
@@ -27,26 +30,32 @@ public class Test {
     @FXML
     private RadioButton answ_rb_3;
 
+    ToggleGroup answers_tgl = new ToggleGroup();
+
     @FXML
     void initialize() throws Exception {
+        answ_rb_1.setToggleGroup(answers_tgl);
+        answ_rb_2.setToggleGroup(answers_tgl);
+        answ_rb_3.setToggleGroup(answers_tgl);
 
         getText("res/tests/test1.txt");
         printText(text);
         setInformation(i);
 
         btn_next.setOnAction(event -> {
+           // int selection = answers_tgl.getSelectedToggle();
+          //  System.out.println(selection);
+            //answers.addElement(Integer.valueOf(String.valueOf(selection)));
             i++;
-            if(i > text.size()/4 - 1){
-                i=text.size()/4 - 1;
-            }
+                if(i > text.size()/4 - 1)
+                    i=text.size()/4 - 1;
             setInformation(i);
         });
 
         btn_prev.setOnAction(event -> {
             i--;
-            if(i<0){
-                i=0;
-            }
+                if(i<0)
+                    i=0;
             setInformation(i);
         });
 
@@ -74,6 +83,7 @@ public class Test {
         answ_rb_1.setText(text.elementAt(1 + i*4));
         answ_rb_2.setText(text.elementAt(2 + i*4));
         answ_rb_3.setText(text.elementAt(3 + i*4));
+        //System.out.println((answers.elementAt(0)));
     }
 
 }

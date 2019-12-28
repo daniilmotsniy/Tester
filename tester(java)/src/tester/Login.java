@@ -38,7 +38,7 @@ public class Login extends Main {
 
         btn_start.setOnAction(event -> {
                 if(txt_field_name.getText().isEmpty()){
-                    lbl_error.setText("Заповніть поля!");
+                    lbl_error.setText("Заповніть поле!");
                 } else {
                     lbl_error.setText("");
 
@@ -57,10 +57,9 @@ public class Login extends Main {
                     catch(IOException ex){
                         System.out.println(ex.getMessage());
                     }
-
+                    pageLoad("fxml/test.fxml");
                 }
 
-                pageLoad("fxml/test.fxml");
 
         });
 
