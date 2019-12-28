@@ -2,6 +2,7 @@ package tester;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ public class Main extends Application {
     public void pageLoad(String fxml_url){
 
         //Here I need to close the window (login.fxml)
+        //((Node) (event.getSource())).getScene().getWindow().hide();
 
         //Loading new fxml
         FXMLLoader loader = new FXMLLoader();

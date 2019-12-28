@@ -12,16 +12,14 @@ import java.util.Vector;
 public class Test {
 
     Vector<String> text = new Vector();
+    int i = 0;
 
     @FXML
     private Label label_question;
-
     @FXML
     private Button btn_prev;
-
     @FXML
     private Button btn_next;
-
     @FXML
     private RadioButton answ_rb_1;
     @FXML
@@ -34,33 +32,28 @@ public class Test {
 
         getText("res/tests/test1.txt");
         printText(text);
-
-        //answ_rb_1.setText(text.elementAt(0));
-        //answ_rb_2.setText(text.elementAt(1));
-
-            for (int i = 0; i < text.size(); i+=4) {
-
-                label_question.setText(text.elementAt(i));
-                answ_rb_1.setText(text.elementAt(i+1));
-                answ_rb_1.setText(text.elementAt(i+2));
-                answ_rb_1.setText(text.elementAt(i+3));
-            }
+        setInformation(i);
 
         btn_next.setOnAction(event -> {
-            if(label_question.getText().isEmpty()){
-                label_question.setText("Hi!");
-            } else {
-                label_question.setText("");
+            i++;
+            if(i > text.size()/4 - 1){
+                i=text.size()/4 - 1;
             }
+            setInformation(i);
+        });
+
+        btn_prev.setOnAction(event -> {
+            i--;
+            if(i<0){
+                i=0;
+            }
+            setInformation(i);
         });
 
     }
 
-
     void getText(String file_adress) throws  Exception {
-
         FileReader reader = new FileReader(file_adress);
-
         Scanner scan = new Scanner(reader);
 
         while (scan.hasNextLine()) {
@@ -74,6 +67,13 @@ public class Test {
         for(int i = 0; i < text.size(); i++){
             System.out.println(text.get(i));
         }
+    }
+
+    void setInformation(int i){
+        label_question.setText(text.elementAt( i*4));
+        answ_rb_1.setText(text.elementAt(1 + i*4));
+        answ_rb_2.setText(text.elementAt(2 + i*4));
+        answ_rb_3.setText(text.elementAt(3 + i*4));
     }
 
 }
