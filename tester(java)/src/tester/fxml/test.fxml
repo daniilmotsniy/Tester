@@ -16,8 +16,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <RadioButton fx:id="answ_rb_1" layoutX="109.0" layoutY="415.0" mnemonicParsing="false" text="first answ" />
-      <RadioButton fx:id="answ_rb_2" layoutX="257.0" layoutY="415.0" mnemonicParsing="false" text="sec answ" />
-      <RadioButton fx:id="answ_rb_3" layoutX="382.0" layoutY="415.0" mnemonicParsing="false" text="thrd" />
+      <RadioButton fx:id="answ_rb_0" layoutX="109.0" layoutY="415.0" mnemonicParsing="false" text="first answ" />
+      <RadioButton fx:id="answ_rb_1" layoutX="257.0" layoutY="415.0" mnemonicParsing="false" text="sec answ" />
+      <RadioButton fx:id="answ_rb_2" layoutX="382.0" layoutY="415.0" mnemonicParsing="false" text="thrd" />
    </children>
 </AnchorPane>

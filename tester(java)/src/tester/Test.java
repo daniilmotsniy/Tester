@@ -24,32 +24,31 @@ public class Test {
     @FXML
     private Button btn_next;
     @FXML
+    private RadioButton answ_rb_0;
+    @FXML
     private RadioButton answ_rb_1;
     @FXML
     private RadioButton answ_rb_2;
-    @FXML
-    private RadioButton answ_rb_3;
 
     ToggleGroup answers_tgl = new ToggleGroup();
 
     @FXML
     void initialize() throws Exception {
+
+        answ_rb_0.setToggleGroup(answers_tgl);
         answ_rb_1.setToggleGroup(answers_tgl);
         answ_rb_2.setToggleGroup(answers_tgl);
-        answ_rb_3.setToggleGroup(answers_tgl);
 
         getText("res/tests/test1.txt");
         printText(text);
         setInformation(i);
 
         btn_next.setOnAction(event -> {
-           // int selection = answers_tgl.getSelectedToggle();
-          //  System.out.println(selection);
-            //answers.addElement(Integer.valueOf(String.valueOf(selection)));
             i++;
                 if(i > text.size()/4 - 1)
                     i=text.size()/4 - 1;
             setInformation(i);
+            addAnswer();
         });
 
         btn_prev.setOnAction(event -> {
@@ -57,6 +56,7 @@ public class Test {
                 if(i<0)
                     i=0;
             setInformation(i);
+            addAnswer();
         });
 
     }
@@ -80,10 +80,23 @@ public class Test {
 
     void setInformation(int i){
         label_question.setText(text.elementAt( i*4));
-        answ_rb_1.setText(text.elementAt(1 + i*4));
-        answ_rb_2.setText(text.elementAt(2 + i*4));
-        answ_rb_3.setText(text.elementAt(3 + i*4));
-        //System.out.println((answers.elementAt(0)));
+        answ_rb_0.setText(text.elementAt(1 + i*4));
+        answ_rb_1.setText(text.elementAt(2 + i*4));
+        answ_rb_2.setText(text.elementAt(3 + i*4));
+        if(answers.size() > 0)
+            System.out.println((answers.elementAt(i-1)));
+    }
+
+    void addAnswer(){
+        if(answ_rb_0.isSelected()==true){
+            answers.addElement(1);
+        } else if(answ_rb_1.isSelected()==true){
+            answers.addElement(2);
+        } else if(answ_rb_2.isSelected()==true){
+            answers.addElement(3);
+        } else {
+            System.out.printf("Error");
+        }
     }
 
 }

@@ -21,16 +21,12 @@ public class Login extends Main {
 
     @FXML
     private TextField txt_field_name;
-
     @FXML
     private ComboBox<String> cmb_group;
-
     @FXML
     private Button btn_start;
-
     @FXML
     private Label lbl_error;
-
     @FXML
     void initialize() {
         cmb_group.setItems(langs);
