@@ -48,7 +48,6 @@ public class Test {
                 if(i > text.size()/4 - 1)
                     i=text.size()/4 - 1;
             setInformation(i);
-            addAnswer();
         });
 
         btn_prev.setOnAction(event -> {
@@ -56,7 +55,6 @@ public class Test {
                 if(i<0)
                     i=0;
             setInformation(i);
-            addAnswer();
         });
 
     }
