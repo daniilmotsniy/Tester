@@ -80,6 +80,11 @@ public class Test {
     }
 
     void setInformation(int i){
+        if(i==text.size()/4 - 1){
+            btn_next.setText("Завершити");
+        } else {
+            btn_next.setText("Наступне");
+        }
         label_question.setText(text.elementAt( i*4));
         answ_rb_0.setText(text.elementAt(1 + i*4));
         answ_rb_1.setText(text.elementAt(2 + i*4));

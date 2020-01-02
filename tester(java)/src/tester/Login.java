@@ -1,7 +1,9 @@
 package tester;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,6 +29,16 @@ public class Login extends Main {
     private Button btn_start;
     @FXML
     private Label lbl_error;
+
+    // Timer
+
+    boolean f = false; // вкл/выкл секундомера
+    int sec = 0; // секунды
+
+    @FXML
+    private Label time_sec; // секунды
+
+
     @FXML
     void initialize() {
         cmb_group.setItems(langs);
@@ -56,6 +68,28 @@ public class Login extends Main {
                     pageLoad("fxml/test.fxml");
                 }
 
+            // Timer sets
+            f = !f; // инвертируем наш "показатель" вкл/выкл
+            Thread s1 = new Thread(new Runnable(){ // создаем поток
+                public void run(){
+                    while (f){ // пока секундомер ВКЛ, то будем делать следующее
+                        try {
+                            Thread.sleep(1000); // пауза в 1 секунду
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Platform.runLater(()-> // это форма для потока в JavaFX
+                        {
+                            sec++; // увеличиваем секунду на 1 (пауза то была)
+                            if (sec==60){ // если секунд 60, то
+                                sec = 0; // обновляем
+                            }
+                            time_sec.setText(sec+""); // выводим наше время на экран
+                        });
+                    }
+                }
+            });
+            s1.start(); // сообственно старт самого потока выше
 
         });
 

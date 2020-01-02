@@ -15,6 +15,11 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="time_sec" focusTraversable="false" layoutX="280.0" layoutY="360.0" prefHeight="59.0" prefWidth="43.0" text="00">
+         <font>
+            <Font name="Century" size="36.0" />
+         </font>
+      </Label>
       <TextField fx:id="txt_field_name" layoutX="195.0" layoutY="110.0" prefHeight="26.0" prefWidth="212.0" />
       <Label layoutX="240.0" layoutY="165.0" prefHeight="35.0" prefWidth="121.0" text="Оберіть групу" textAlignment="CENTER">
          <font>
