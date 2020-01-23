@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.StackPane;
 
 import java.io.FileReader;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Test {
+
 
     Vector<String> text = new Vector();
     HashMap<Integer, Integer> answers = new HashMap<>();

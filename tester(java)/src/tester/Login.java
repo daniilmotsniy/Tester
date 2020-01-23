@@ -5,17 +5,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Login extends Main {
+public class Login {
+
+    @FXML
+    private AnchorPane rootPaneLogin;
 
     ObservableList<String> langs = FXCollections.observableArrayList("КС-11", "КС-12", "КС-12", "КС-14");
     LocalDateTime myDateObj = LocalDateTime.now();
@@ -34,10 +39,6 @@ public class Login extends Main {
 
     boolean f = false; // вкл/выкл секундомера
     int sec = 0; // секунды
-
-    @FXML
-    private Label time_sec; // секунды
-
 
     @FXML
     void initialize() {
@@ -65,7 +66,14 @@ public class Login extends Main {
                     catch(IOException ex){
                         System.out.println(ex.getMessage());
                     }
-                    pageLoad("fxml/test.fxml");
+                    try {
+                        AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
+                        rootPaneLogin.getChildren().setAll(pane);
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println(e.getMessage());
+                    }
                 }
 
             // Timer sets
@@ -81,10 +89,7 @@ public class Login extends Main {
                         Platform.runLater(()-> // это форма для потока в JavaFX
                         {
                             sec++; // увеличиваем секунду на 1 (пауза то была)
-                            if (sec==60){ // если секунд 60, то
-                                sec = 0; // обновляем
-                            }
-                            time_sec.setText(sec+""); // выводим наше время на экран
+                            System.out.println("Time - " + sec); // выводим наше время
                         });
                     }
                 }
