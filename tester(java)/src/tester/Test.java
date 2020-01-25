@@ -67,7 +67,7 @@ public class Test {
         Scanner scan = new Scanner(reader);
 
         while (scan.hasNextLine()) {
-            text.add(scan.nextLine());
+                text.add(scan.nextLine());
         }
 
         reader.close();
