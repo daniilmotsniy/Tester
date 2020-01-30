@@ -44,32 +44,37 @@ public class Login {
                 } else {
                     lbl_error.setText("");
 
-                    try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
-                    {
-                        String name_str = txt_field_name.getText();
-                        String group_str = cmb_group.getSelectionModel().getSelectedItem();
-                        String current_time = myDateObj.format(myFormatObj);
-                        writer.write(name_str);
-                        writer.append('\t');
-                        writer.write(group_str);
-                        writer.append('\t');
-                        writer.write(current_time);
-                        writer.append('\n');
-                    }
-                    catch(IOException ex){
-                        System.out.println(ex.getMessage());
-                    }
-                    try {
-                        AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
-                        rootPaneLogin.getChildren().setAll(pane);
-                    }
-                    catch (Exception e)
-                    {
-                        System.out.println(e.getMessage());
-                    }
-                    // Timer
-                    Timer start_time = new Timer(true);
-                    start_time.runTime();
+                        String name = txt_field_name.getText();
+                        String group = cmb_group.getSelectionModel().getSelectedItem();
+                        String start = myDateObj.format(myFormatObj);
+
+                        try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
+                        {
+                            String name_str = txt_field_name.getText();
+                            String group_str = cmb_group.getSelectionModel().getSelectedItem();
+                            String current_time = myDateObj.format(myFormatObj);
+                            writer.write(name_str);
+                            writer.append('\t');
+                            writer.write(group_str);
+                            writer.append('\t');
+                            writer.write(current_time);
+                            writer.append('\n');
+                        }
+                        catch(IOException ex){
+                            System.out.println(ex.getMessage());
+                        }
+
+                        try {
+                            AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
+                            rootPaneLogin.getChildren().setAll(pane);
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println(e.getMessage());
+                        }
+                        // Timer
+                        Timer start_time = new Timer(true);
+                        start_time.runTime();
                 }
         });
 

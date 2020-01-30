@@ -7,13 +7,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 
 public class Test {
 
-    Vector<String> text = new Vector();
+    LinkedList<String> text = new LinkedList<>();
     HashMap<Integer, Integer> answers = new HashMap<>();
 
     int i = 0; //Number of block with questions and answers
@@ -32,6 +30,8 @@ public class Test {
     private RadioButton answ_rb_2;
 
     ToggleGroup answers_tgl = new ToggleGroup();
+
+    ArrayList<Block> blocks = new ArrayList<>();
 
     @FXML
     void initialize() throws Exception {
@@ -67,7 +67,7 @@ public class Test {
         Scanner scan = new Scanner(reader);
 
         while (scan.hasNextLine()) {
-                text.add(scan.nextLine());
+            text.add(scan.nextLine());
         }
 
         reader.close();
@@ -82,14 +82,18 @@ public class Test {
     void setInformation(int i){
         if(i==text.size()/4 - 1){
             btn_next.setText("Завершити");
-            Timer finish_time = new Timer(false);
+        } if(i==text.size()/4-1) {
+            Timer.f = false;
         } else {
             btn_next.setText("Наступне");
         }
-        label_question.setText(text.elementAt( i*4));
-        answ_rb_0.setText(text.elementAt(1 + i*4));
-        answ_rb_1.setText(text.elementAt(2 + i*4));
-        answ_rb_2.setText(text.elementAt(3 + i*4));
+
+        blocks.add(new Block(text.get( i*4), text.get(1 + i*4), text.get(2 + i*4), text.get(3 + i*4)));
+
+        label_question.setText(text.get( i*4));
+        answ_rb_0.setText(text.get(1 + i*4));
+        answ_rb_1.setText(text.get(2 + i*4));
+        answ_rb_2.setText(text.get(3 + i*4));
     }
 
     void addAnswer(int i) {
