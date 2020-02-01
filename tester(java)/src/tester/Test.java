@@ -20,9 +20,15 @@ public class Test {
     @FXML
     private Label label_question;
     @FXML
+    private Label label_result;
+    @FXML
+    private Label label_time;
+    @FXML
     private Button btn_prev;
     @FXML
     private Button btn_next;
+    @FXML
+    private Button btn_finish;
     @FXML
     private RadioButton answ_rb_0;
     @FXML
@@ -41,8 +47,14 @@ public class Test {
 
         getText("res/tests/test1.txt");
         getTrueAnswers("res/tests/test1.txt");
+        removeTrueSymbol();
         printText(true_answers);
+
         setInformation(i);
+
+        btn_finish.setOnAction(event -> {
+            Timer.f = false;
+        });
 
         btn_next.setOnAction(event -> {
             i++;
@@ -85,6 +97,12 @@ public class Test {
         reader.close();
     }
 
+    void removeTrueSymbol(){
+        for (int i = 0; i < text.size(); i++){
+            text.set(i, text.get(i).replace('+', ' '));
+        }
+    }
+
     void printText(HashMap<Integer, Character> text){
         for(int i = 0; i < text.size(); i++){
             System.out.println(text.get(i));
@@ -92,13 +110,7 @@ public class Test {
     }
 
     void setInformation(int i){
-        if(i==text.size()/4 - 1){
-            btn_next.setText("Завершити");
-        } if(i==text.size()/4-1) {
-            Timer.f = false;
-        } else {
-            btn_next.setText("Наступне");
-        }
+        btn_next.setText("Наступне");
 
         label_question.setText(text.get( i*4));
         answ_rb_0.setText(text.get(1 + i*4));
