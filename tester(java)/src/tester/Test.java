@@ -13,6 +13,7 @@ public class Test {
 
     LinkedList<String> text = new LinkedList<>();
     HashMap<Integer, Integer> answers = new HashMap<>();
+    HashMap<Integer, Character> true_answers = new HashMap<>();
 
     int i = 0; //Number of block with questions and answers
 
@@ -31,8 +32,6 @@ public class Test {
 
     ToggleGroup answers_tgl = new ToggleGroup();
 
-    ArrayList<Block> blocks = new ArrayList<>();
-
     @FXML
     void initialize() throws Exception {
 
@@ -41,7 +40,8 @@ public class Test {
         answ_rb_2.setToggleGroup(answers_tgl);
 
         getText("res/tests/test1.txt");
-        //printText(text);
+        getTrueAnswers("res/tests/test1.txt");
+        printText(true_answers);
         setInformation(i);
 
         btn_next.setOnAction(event -> {
@@ -65,15 +65,27 @@ public class Test {
     void getText(String file_adress) throws  Exception {
         FileReader reader = new FileReader(file_adress);
         Scanner scan = new Scanner(reader);
-
         while (scan.hasNextLine()) {
             text.add(scan.nextLine());
         }
-
         reader.close();
     }
 
-    void printText(Vector<String> text){
+    void getTrueAnswers(String file_adress) throws Exception {
+        FileReader reader = new FileReader(file_adress);
+        Scanner scan = new Scanner(reader);
+        int j = 0;
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+            if(line.contains("+")){
+                   true_answers.put(j, line.charAt(0));
+                   j++;
+            }
+        }
+        reader.close();
+    }
+
+    void printText(HashMap<Integer, Character> text){
         for(int i = 0; i < text.size(); i++){
             System.out.println(text.get(i));
         }
@@ -87,8 +99,6 @@ public class Test {
         } else {
             btn_next.setText("Наступне");
         }
-
-        blocks.add(new Block(text.get( i*4), text.get(1 + i*4), text.get(2 + i*4), text.get(3 + i*4)));
 
         label_question.setText(text.get( i*4));
         answ_rb_0.setText(text.get(1 + i*4));
