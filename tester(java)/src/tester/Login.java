@@ -58,7 +58,6 @@ public class Login {
                             writer.write(group_str);
                             writer.append('\t');
                             writer.write(current_time);
-                            writer.append('\n');
                         }
                         catch(IOException ex){
                             System.out.println(ex.getMessage());

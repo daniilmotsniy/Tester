@@ -7,12 +7,16 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Test {
 
     LinkedList<String> text = new LinkedList<>();
-    HashMap<Integer, Integer> answers = new HashMap<>();
+    HashMap<Integer, Character> answers = new HashMap<>();
     HashMap<Integer, Character> true_answers = new HashMap<>();
 
     int i = 0; //Number of block with questions and answers
@@ -21,8 +25,6 @@ public class Test {
     private Label label_question;
     @FXML
     private Label label_result;
-    @FXML
-    private Label label_time;
     @FXML
     private Button btn_prev;
     @FXML
@@ -36,7 +38,12 @@ public class Test {
     @FXML
     private RadioButton answ_rb_2;
 
+    LocalDateTime myDateObj = LocalDateTime.now();
+    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
     ToggleGroup answers_tgl = new ToggleGroup();
+
+    String path = "res/tests/test1.txt";
 
     @FXML
     void initialize() throws Exception {
@@ -45,23 +52,38 @@ public class Test {
         answ_rb_1.setToggleGroup(answers_tgl);
         answ_rb_2.setToggleGroup(answers_tgl);
 
-        getText("res/tests/test1.txt");
-        getTrueAnswers("res/tests/test1.txt");
+        getText();
+        getTrueAnswers();
         removeTrueSymbol();
-        printText(true_answers);
-
+        //printText(true_answers);
         setInformation(i);
 
         btn_finish.setOnAction(event -> {
+            addAnswer(i);
+            try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
+            {
+                String current_time = myDateObj.format(myFormatObj);
+                writer.append('\t');
+                writer.write(current_time);
+                writer.append('\n');
+            }
+            catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
+//            printText(answers);
+//            printText(true_answers);
+            label_result.setText(String.valueOf(result(answers, true_answers)));
             Timer.f = false;
         });
 
         btn_next.setOnAction(event -> {
+            if(i > text.size()/4 - 1){
+                i = text.size()/4 - 1;
+            } else {
+                setInformation(i);
+                addAnswer(i);
+            }
             i++;
-                if(i > text.size()/4 - 1)
-                    i = text.size()/4 - 1;
-            setInformation(i);
-            addAnswer(i);
         });
 
         btn_prev.setOnAction(event -> {
@@ -74,8 +96,8 @@ public class Test {
 
     }
 
-    void getText(String file_adress) throws  Exception {
-        FileReader reader = new FileReader(file_adress);
+    void getText() throws  Exception {
+        FileReader reader = new FileReader(path);
         Scanner scan = new Scanner(reader);
         while (scan.hasNextLine()) {
             text.add(scan.nextLine());
@@ -83,8 +105,8 @@ public class Test {
         reader.close();
     }
 
-    void getTrueAnswers(String file_adress) throws Exception {
-        FileReader reader = new FileReader(file_adress);
+    void getTrueAnswers() throws Exception {
+        FileReader reader = new FileReader(path);
         Scanner scan = new Scanner(reader);
         int j = 0;
         while (scan.hasNextLine()) {
@@ -120,14 +142,25 @@ public class Test {
 
     void addAnswer(int i) {
         if (answ_rb_0.isSelected() == true && answ_rb_1.isSelected() == false && answ_rb_2.isSelected() == false) {
-            answers.put(i, 0);
+            answers.put(i, '1');
         } else if (answ_rb_0.isSelected() == false && answ_rb_1.isSelected() == true && answ_rb_2.isSelected() == false) {
-            answers.put(i, 1);
+            answers.put(i, '2');
         } else if (answ_rb_0.isSelected() == false && answ_rb_1.isSelected() == false && answ_rb_2.isSelected() == true) {
-            answers.put(i, 2);
+            answers.put(i, '3');
         } else {
             System.out.printf("Error");
         }
         System.out.println("Result: q - "+i+"/ a - " + answers.get(i));
+    }
+
+    int result(HashMap<Integer, Character> answers, HashMap<Integer, Character> true_answers){
+        int res = 0;
+
+        for(int i = 0; i < true_answers.size(); i++){
+            if(true_answers.get(i) == answers.get(i)){
+                res++;
+            }
+        }
+        return res;
     }
 }

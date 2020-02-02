@@ -1,10 +1,14 @@
 package tester;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class Timer {
+    @FXML
+    private Label label_time;
 
-    private int seconds = 0; // секунды
+    public int seconds = 0; // секунды
     static boolean f = false; // вкл/выкл секундомера
 
     Timer(boolean f){
@@ -24,6 +28,7 @@ public class Timer {
                     {
                         seconds++; // увеличиваем секунду на 1 (пауза то была)
                         System.out.println("Time - " + seconds);
+                        //label_time.setText(String.valueOf(seconds));
                     });
                 }
             }
