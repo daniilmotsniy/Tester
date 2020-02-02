@@ -6,9 +6,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
+<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
-      <Label fx:id="label_question" layoutX="109.0" layoutY="109.0" prefHeight="221.0" prefWidth="382.0" style="-fx-background-color: #798#c5cae96cb;" />
+      <Label fx:id="label_question" layoutX="109.0" layoutY="109.0" prefHeight="221.0" prefWidth="382.0" style="-fx-background-color: #798#c5cae96cb;" textFill="WHITE">
+         <font>
+            <Font name="Calibri Light" size="13.0" />
+         </font></Label>
       <Button fx:id="btn_next" layoutX="439.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #82ba94;" text="Наступне" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
