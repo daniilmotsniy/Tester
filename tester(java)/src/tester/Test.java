@@ -60,20 +60,25 @@ public class Test {
 
         btn_finish.setOnAction(event -> {
             addAnswer(i);
+
+            String result = String.valueOf(result(answers, true_answers));
+//            printText(answers);
+//            printText(true_answers);
+            label_result.setText(result);
+            Timer.f = false;
+
             try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
             {
                 String current_time = myDateObj.format(myFormatObj);
                 writer.append('\t');
                 writer.write(current_time);
+                writer.append('\t');
+                writer.write(result);
                 writer.append('\n');
             }
             catch(IOException ex){
                 System.out.println(ex.getMessage());
             }
-//            printText(answers);
-//            printText(true_answers);
-            label_result.setText(String.valueOf(result(answers, true_answers)));
-            Timer.f = false;
         });
 
         btn_next.setOnAction(event -> {
