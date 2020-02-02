@@ -9,8 +9,8 @@
 <AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
       <Label fx:id="label_question" layoutX="109.0" layoutY="109.0" prefHeight="221.0" prefWidth="382.0" />
-      <Button fx:id="btn_next" layoutX="439.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Наступне" />
-      <Button fx:id="btn_prev" layoutX="41.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Попереднє" />
+      <Button fx:id="btn_next" layoutX="439.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-radius: 20;" text="Наступне" />
+      <Button fx:id="btn_prev" layoutX="41.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-radius: 20;" text="Попереднє" />
       <Label fx:id="label_question1" layoutX="261.0" layoutY="50.0" prefHeight="36.0" prefWidth="78.0" text="Питання">
          <font>
             <Font size="18.0" />
@@ -19,7 +19,7 @@
       <RadioButton fx:id="answ_rb_0" layoutX="57.0" layoutY="398.0" mnemonicParsing="false" text="first answ" />
       <RadioButton fx:id="answ_rb_1" layoutX="266.0" layoutY="398.0" mnemonicParsing="false" text="sec answ" />
       <RadioButton fx:id="answ_rb_2" layoutX="439.0" layoutY="398.0" mnemonicParsing="false" text="thrd" />
-      <Button fx:id="btn_finish" layoutX="248.0" layoutY="547.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Завершити" />
+      <Button fx:id="btn_finish" layoutX="248.0" layoutY="547.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-radius: 15;" text="Завершити" />
       <Label fx:id="label_result" layoutX="417.0" layoutY="521.0" prefHeight="52.0" prefWidth="148.0" />
       <Label fx:id="label_time" layoutX="19.0" layoutY="521.0" prefHeight="52.0" prefWidth="148.0" />
    </children>

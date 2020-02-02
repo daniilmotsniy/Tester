@@ -7,22 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="rootPaneLogin" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Login">
    <children>
-      <Label layoutX="182.0" layoutY="57.0" prefHeight="35.0" prefWidth="239.0" text="Введіть прізвище та ініціали" textAlignment="CENTER">
+      <Label layoutX="182.0" layoutY="64.0" prefHeight="35.0" prefWidth="239.0" text="Введіть прізвище та ініціали" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_field_name" layoutX="195.0" layoutY="110.0" prefHeight="26.0" prefWidth="212.0" />
-      <Label layoutX="240.0" layoutY="165.0" prefHeight="35.0" prefWidth="121.0" text="Оберіть групу" textAlignment="CENTER">
+      <TextField fx:id="txt_field_name" layoutX="166.0" layoutY="112.0" prefHeight="26.0" prefWidth="269.0" style="-fx-background-radius: 20;" />
+      <Label layoutX="241.0" layoutY="169.0" prefHeight="35.0" prefWidth="121.0" text="Оберіть групу" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmb_group" layoutX="225.0" layoutY="211.0" prefWidth="150.0" />
-      <Button fx:id="btn_start" layoutX="241.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Розпочати" />
+      <ComboBox fx:id="cmb_group" layoutX="227.0" layoutY="220.0" prefWidth="150.0" style="-fx-background-radius: 20;" />
+      <Button fx:id="btn_start" layoutX="241.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" style="-fx-background-radius: 20;" text="Розпочати" />
       <Label fx:id="lbl_error" layoutX="258.0" layoutY="369.0" prefHeight="17.0" prefWidth="103.0" />
    </children>
 </AnchorPane>
