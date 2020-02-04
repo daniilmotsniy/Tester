@@ -64,18 +64,18 @@ public class Test {
         getText();
         getTrueAnswers();
         removeTrueSymbol();
-        //printText(true_answers);
         setInformation(i);
 
         btn_finish.setOnAction(event -> {
+            //Stop timer counting
+            start_time.f = false;
+            //Adding answ
             addAnswer(i);
 
-            String result = "Резульат: " + String.valueOf(result(answers, true_answers));
-//            printText(answers);
-//            printText(true_answers);
+            String result = "Резульат: " + result(answers, true_answers);
             label_result.setText(result);
-            start_time.f = false;
 
+            //Add finish time + result in txt file
             try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
             {
                 String current_time = myDateObj.format(myFormatObj);
@@ -90,6 +90,7 @@ public class Test {
             }
         });
 
+        //Next btn
         btn_next.setOnAction(event -> {
             if(i > text.size()/4 - 1){
                 i = text.size()/4 - 1;
@@ -100,6 +101,7 @@ public class Test {
             i++;
         });
 
+        //Prev btn
         btn_prev.setOnAction(event -> {
             i--;
                 if(i<0)
@@ -109,6 +111,7 @@ public class Test {
         });
 
     }
+
 
     void getText() throws  Exception {
         FileReader reader = new FileReader(path);
@@ -139,11 +142,11 @@ public class Test {
         }
     }
 
-    void printText(HashMap<Integer, Character> text){
-        for(int i = 0; i < text.size(); i++){
-            System.out.println(text.get(i));
-        }
-    }
+//    void printText(HashMap<Integer, Character> text){
+//        for(int i = 0; i < text.size(); i++){
+//            System.out.println(text.get(i));
+//        }
+//    }
 
     void setInformation(int i){
         btn_next.setText("Наступне");
