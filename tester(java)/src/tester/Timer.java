@@ -4,9 +4,10 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 
 public class Timer {
-
-    public int seconds = 0; // секунды
-    boolean f = false; // вкл/выкл секундомера
+    //Seconds
+    public int seconds = 0;
+    //On/off
+    boolean f = false;
 
     public void setLabel_time(Label label_time) {
         this.label_time = label_time;
@@ -14,25 +15,26 @@ public class Timer {
 
     private Label label_time;
 
+    //Main function
     public void runTime(){
-        Thread seconds_thread = new Thread(new Runnable(){ // создаем поток
+        Thread seconds_thread = new Thread(new Runnable(){ // creating thread
             public void run(){
-                while (f){ // пока секундомер ВКЛ, то будем делать следующее
+                while (f){ //While "On"
                     try {
-                        Thread.sleep(1000); // пауза в 1 секунду
+                        Thread.sleep(1000); //Pause for 1 sec
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Platform.runLater(()-> // это форма для потока в JavaFX
+                    Platform.runLater(()-> //Platform for thread in JavaFX
                     {
-                        seconds++; // увеличиваем секунду на 1 (пауза то была)
+                        seconds++; // Seconds increment
                         System.out.println("Time - " + seconds);
                         label_time.setText("Часу минуло: " + seconds);
                     });
                 }
             }
         });
-        seconds_thread.start(); // сообственно старт самого потока выше
+        seconds_thread.start(); //Start main thread
     }
 
 }

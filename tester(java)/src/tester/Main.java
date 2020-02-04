@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    //Main page with some settings
+
     Image icon = new Image(getClass().getResourceAsStream("icon/icon.png"));
 
     @Override

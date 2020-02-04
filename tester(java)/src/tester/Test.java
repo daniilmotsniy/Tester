@@ -14,12 +14,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Test {
-
+    //Here we have all the txt file
     LinkedList<String> text = new LinkedList<>();
+    //It keeps answers from user
     HashMap<Integer, Character> answers = new HashMap<>();
+    //It keeps true answers
     HashMap<Integer, Character> true_answers = new HashMap<>();
 
     int i = 0; //Number of block with questions and answers
+    // block is the part of text that has 1 question and N (3) answers
 
     @FXML
     private Label label_time;
@@ -40,11 +43,13 @@ public class Test {
     @FXML
     private RadioButton answ_rb_2;
 
+    // Date format
     LocalDateTime myDateObj = LocalDateTime.now();
     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     ToggleGroup answers_tgl = new ToggleGroup();
 
+    //Path to txt file
     String path = "res/tests/test1.txt";
 
     @FXML
