@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Login {
-
     @FXML
     private AnchorPane rootPaneLogin;
 
@@ -70,9 +69,6 @@ public class Login {
                         {
                             System.out.println(e.getMessage());
                         }
-                        // Timer
-                        Timer start_time = new Timer(true);
-                        start_time.runTime();
                 }
         });
 

@@ -22,6 +22,8 @@ public class Test {
     int i = 0; //Number of block with questions and answers
 
     @FXML
+    private Label label_time;
+    @FXML
     private Label label_question;
     @FXML
     private Label label_result;
@@ -47,11 +49,18 @@ public class Test {
 
     @FXML
     void initialize() throws Exception {
+        // Timer
+        Timer start_time = new Timer();
+        start_time.setLabel_time(label_time);
+        start_time.f = true;
+        start_time.runTime();
 
+        //Setting togle group
         answ_rb_0.setToggleGroup(answers_tgl);
         answ_rb_1.setToggleGroup(answers_tgl);
         answ_rb_2.setToggleGroup(answers_tgl);
 
+        //Main methods
         getText();
         getTrueAnswers();
         removeTrueSymbol();
@@ -61,11 +70,11 @@ public class Test {
         btn_finish.setOnAction(event -> {
             addAnswer(i);
 
-            String result = String.valueOf(result(answers, true_answers));
+            String result = "Резульат: " + String.valueOf(result(answers, true_answers));
 //            printText(answers);
 //            printText(true_answers);
             label_result.setText(result);
-            Timer.f = false;
+            start_time.f = false;
 
             try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
             {

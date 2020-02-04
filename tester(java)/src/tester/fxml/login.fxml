@@ -21,7 +21,7 @@
             <Font name="Calibri Light" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmb_group" layoutX="225.0" layoutY="211.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-background-color: #a5d6a7;">
+      <ComboBox fx:id="cmb_group" layoutX="225.0" layoutY="211.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-text-fill:#fffff; fx-background-color: #a5d6a7">
          <effect>
             <Blend />
          </effect></ComboBox>

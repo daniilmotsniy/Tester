@@ -1,21 +1,20 @@
 package tester;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class Timer {
-    @FXML
-    private Label label_time;
 
     public int seconds = 0; // секунды
-    static boolean f = false; // вкл/выкл секундомера
+    boolean f = false; // вкл/выкл секундомера
 
-    Timer(boolean f){
-        this.f = f;
+    public void setLabel_time(Label label_time) {
+        this.label_time = label_time;
     }
 
-    void runTime(){
+    private Label label_time;
+
+    public void runTime(){
         Thread seconds_thread = new Thread(new Runnable(){ // создаем поток
             public void run(){
                 while (f){ // пока секундомер ВКЛ, то будем делать следующее
@@ -28,11 +27,12 @@ public class Timer {
                     {
                         seconds++; // увеличиваем секунду на 1 (пауза то была)
                         System.out.println("Time - " + seconds);
-                        //label_time.setText(String.valueOf(seconds));
+                        label_time.setText("Часу минуло: " + seconds);
                     });
                 }
             }
         });
         seconds_thread.start(); // сообственно старт самого потока выше
     }
+
 }
