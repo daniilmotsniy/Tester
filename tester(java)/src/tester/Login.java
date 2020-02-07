@@ -42,10 +42,6 @@ public class Login {
                 } else {
                     lbl_error.setText("");
 
-                        String name = txt_field_name.getText();
-                        String group = cmb_group.getSelectionModel().getSelectedItem();
-                        String start = myDateObj.format(myFormatObj);
-
                         try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
                         {
                             String name_str = txt_field_name.getText();

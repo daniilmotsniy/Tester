@@ -9,6 +9,7 @@ public class Timer {
     //On/off
     boolean f = false;
 
+    //Setter
     public void setLabel_time(Label label_time) {
         this.label_time = label_time;
     }

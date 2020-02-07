@@ -66,9 +66,13 @@ public class Test {
         answ_rb_2.setToggleGroup(answers_tgl);
 
         //Main methods
+        //Getting the txt by stoke
         getText();
+        //Getting true answers
         getTrueAnswers();
+        //Delete '+' from text
         removeTrueSymbol();
+        //Set inf-n on the page
         setInformation(i);
 
         btn_finish.setOnAction(event -> {
@@ -116,7 +120,6 @@ public class Test {
         });
 
     }
-
 
     void getText() throws  Exception {
         FileReader reader = new FileReader(path);
