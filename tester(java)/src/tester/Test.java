@@ -52,6 +52,9 @@ public class Test {
     //Path to txt file
     String path = "res/tests/test1.txt";
 
+    //Variable for blocking buttons after test
+    boolean finished = false;
+
     @FXML
     void initialize() throws Exception {
         // Timer
@@ -76,49 +79,56 @@ public class Test {
         setInformation(i);
 
         btn_finish.setOnAction(event -> {
-            //Stop timer counting
-            start_time.f = false;
-            //Adding answ
-            addAnswer(i);
+            if(finished==false) {
+                //Stop timer counting
+                start_time.f = false;
+                //Block other buttons
+                finished = true;
+                //Adding answ
+                addAnswer(i);
 
-            String result = "Резульат: " + result(answers, true_answers);
-            label_result.setText(result);
+                String result = "Резульат: " + result(answers, true_answers);
+                label_result.setText(result);
 
-            //Add finish time + result in txt file
-            try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
-            {
-                String current_time = myDateObj.format(myFormatObj);
-                writer.append('\t');
-                writer.write(current_time);
-                writer.append('\t');
-                writer.write(result);
-                writer.append('\n');
-            }
-            catch(IOException ex){
-                System.out.println(ex.getMessage());
+                //Add finish time + result in txt file
+                try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
+                {
+                    String current_time = myDateObj.format(myFormatObj);
+                    writer.append('\t');
+                    writer.write(current_time);
+                    writer.append('\t');
+                    writer.write(result);
+                    writer.append('\n');
+                }
+                catch(IOException ex){
+                    System.out.println(ex.getMessage());
+                }
             }
         });
 
         //Next btn
         btn_next.setOnAction(event -> {
-            if(i > text.size()/4 - 1){
-                i = text.size()/4 - 1;
-            } else {
-                setInformation(i);
-                addAnswer(i);
+            if(finished==false) {
+                if (i > text.size() / 4 - 1) {
+                    i = text.size() / 4 - 1;
+                } else {
+                    setInformation(i);
+                    addAnswer(i);
+                }
+                i++;
             }
-            i++;
         });
 
         //Prev btn
         btn_prev.setOnAction(event -> {
-            i--;
-                if(i<0)
+            if(finished==false) {
+                i--;
+                if (i < 0)
                     i = 0;
-            setInformation(i);
-            addAnswer(i);
+                setInformation(i);
+                addAnswer(i);
+            }
         });
-
     }
 
     void getText() throws  Exception {
