@@ -25,7 +25,7 @@
          <effect>
             <Blend />
          </effect></ComboBox>
-      <Button fx:id="btn_start" layoutX="241.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #82ba94;" text="Розпочати" textFill="WHITE" />
+      <Button fx:id="btn_start" layoutX="241.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #66cc80;" text="Розпочати" textFill="WHITE" />
       <Label fx:id="lbl_error" layoutX="258.0" layoutY="369.0" prefHeight="17.0" prefWidth="103.0" />
    </children>
 </AnchorPane>

@@ -12,11 +12,11 @@
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
-      <Button fx:id="btn_next" layoutX="439.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #82ba94;" text="Наступне" textFill="WHITE">
+      <Button fx:id="btn_next" layoutX="439.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Наступне" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Button fx:id="btn_prev" layoutX="41.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #82ba94;" text="Попереднє" textFill="WHITE">
+      <Button fx:id="btn_prev" layoutX="41.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Попереднє" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
@@ -37,7 +37,7 @@
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <Button fx:id="btn_finish" layoutX="248.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #82ba94;" text="Завершити" textFill="WHITE">
+      <Button fx:id="btn_finish" layoutX="248.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>

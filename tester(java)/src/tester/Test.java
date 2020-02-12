@@ -15,7 +15,7 @@ import java.util.*;
 
 public class Test {
     //Here we have all the txt file
-    LinkedList<String> text = new LinkedList<>();
+    ArrayList<String> text = new ArrayList<>();
     //It keeps answers from user
     HashMap<Integer, Character> answers = new HashMap<>();
     //It keeps true answers
