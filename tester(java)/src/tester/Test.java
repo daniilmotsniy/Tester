@@ -50,7 +50,7 @@ public class Test {
     ToggleGroup answers_tgl = new ToggleGroup();
 
     //Path to txt file
-    String path = "res/tests/test1.txt";
+    static String path = "res/tests/test1.txt";  // I use static cause I dont know how to do it better :3
 
     //Variable for blocking buttons after test
     boolean finished = false;
