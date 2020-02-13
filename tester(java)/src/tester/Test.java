@@ -72,12 +72,10 @@ public class Test {
         //Getting the txt by stoke
         getText();
         //It keeps answers from user
-        int[] answers = new int[text.size()]; // wasd array int[3]
-        for(int i = 0; i < answers.length; i ++){
-            answers[i] = -1;
-        }
+        int[] answers = new int[text.size() / 4]; // wasd1 / 4
+        Arrays.fill(answers, -1); // wasd1
         //It keeps true answers
-        int[] true_answers = new int[text.size()];
+        int[] true_answers = new int[text.size() / 4]; // wasd1 / 4
         //Getting true answers
         getTrueAnswers(true_answers);
         //Delete '+' from text
@@ -94,7 +92,7 @@ public class Test {
                 //Adding answ
                 addAnswer(i, answers);
 
-                String result = "Резульат: " + result(answers, true_answers);
+                String result = "Результат: " + result(answers, true_answers);
                 label_result.setText(result);
 
                 //Add finish time + result in txt file
@@ -153,11 +151,8 @@ public class Test {
 
         int option = answers[i];
 
-        System.out.println("Option: " + option);
-        System.out.println(answers.toString());
-
         if (option != -1) {
-            option -= '0';
+            // option -= '0'; // wasd1 ты забыл убрать
 
             if (option == 1) answ_rb_0.setSelected(true);
             if (option == 2) answ_rb_1.setSelected(true);
@@ -181,7 +176,7 @@ public class Test {
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
             if (line.contains("+")) {
-                true_answers[j] = line.charAt(0);
+                true_answers[j] = line.charAt(0) - '1'; // wasd1 - '0'
                 j++;
             }
         }
@@ -228,7 +223,7 @@ public class Test {
         int res = 0;
 
         for (int i = 0; i < true_answers.length; i++) {
-            if (true_answers[i] == answers[i]) {
+            if (true_answers[i] == answers[i] - 1) { // wasd1 - 1
                 res++;
             }
         }
