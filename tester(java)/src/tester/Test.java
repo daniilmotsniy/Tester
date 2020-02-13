@@ -16,10 +16,7 @@ import java.util.*;
 public class Test {
     //Here we have all the txt file
     ArrayList<String> text = new ArrayList<>();
-    //It keeps answers from user
-//    HashMap<Integer, Character> answers = new HashMap<>(); // wasd array int[3]
-//    //It keeps true answers
-//    HashMap<Integer, Character> true_answers = new HashMap<>();
+
 
     int i = 0; //Number of block with questions and answers wasd rename
     // block is the part of text that has 1 question and N (3) answers
