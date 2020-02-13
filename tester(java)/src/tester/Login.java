@@ -18,8 +18,8 @@ public class Login {
     @FXML
     private AnchorPane rootPaneLogin;
 
-    ObservableList<String> langs = FXCollections.observableArrayList("КС-11", "КС-12", "КС-12", "КС-14");
-    ObservableList<String> langs_test = FXCollections.observableArrayList();
+    ObservableList<String> langs = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12");
+//    ObservableList<String> langs_test = FXCollections.observableArrayList();
 
     LocalDateTime myDateObj = LocalDateTime.now();
     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -41,9 +41,9 @@ public class Login {
         cmb_group.setItems(langs);
         cmb_group.getSelectionModel().select(0);
         //Cmb with tests
-        findTests(langs_test);
-        cmb_group.setItems(langs_test);
-        cmb_group.getSelectionModel().select(0);
+//        findTests(langs_test);
+//        cmb_group.setItems(langs_test);
+//        cmb_group.getSelectionModel().select(0);
 
         btn_start.setOnAction(event -> {
                 if(txt_field_name.getText().isEmpty()){
@@ -77,12 +77,10 @@ public class Login {
                 }
         });
 
-
-
     }
 
-    void findTests(ObservableList<String> langs_test){
-        langs_test.add();
-    }
+//    void findTests(ObservableList<String> langs_test){
+//        langs_test.add();
+//    }
 }
 

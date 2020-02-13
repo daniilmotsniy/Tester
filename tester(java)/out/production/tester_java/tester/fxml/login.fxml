@@ -10,22 +10,32 @@
 
 <AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Login">
    <children>
-      <Label layoutX="182.0" layoutY="57.0" prefHeight="35.0" prefWidth="239.0" text="Введіть прізвище та ініціали" textAlignment="CENTER" textFill="WHITE">
+      <Label layoutX="181.0" layoutY="40.0" prefHeight="35.0" prefWidth="239.0" text="Введіть прізвище та ініціали" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_field_name" layoutX="195.0" layoutY="110.0" prefHeight="26.0" prefWidth="212.0" style="-fx-background-radius: 15;" />
-      <Label layoutX="240.0" layoutY="165.0" prefHeight="35.0" prefWidth="121.0" text="Оберіть групу" textAlignment="CENTER" textFill="WHITE">
+      <TextField fx:id="txt_field_name" layoutX="194.0" layoutY="93.0" prefHeight="26.0" prefWidth="212.0" style="-fx-background-radius: 15;" />
+      <Label layoutX="240.0" layoutY="152.0" prefHeight="35.0" prefWidth="121.0" text="Оберіть групу" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmb_group" layoutX="225.0" layoutY="211.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-text-fill:#fffff; fx-background-color: #a5d6a7">
+      <ComboBox fx:id="cmb_group" layoutX="225.0" layoutY="198.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-text-fill:#fffff; fx-background-color: #a5d6a7">
          <effect>
             <Blend />
          </effect></ComboBox>
-      <Button fx:id="btn_start" layoutX="241.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #66cc80;" text="Розпочати" textFill="WHITE" />
+      <Button fx:id="btn_start" layoutX="240.0" layoutY="344.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #66cc80;" text="Розпочати" textFill="WHITE" />
       <Label fx:id="lbl_error" layoutX="258.0" layoutY="369.0" prefHeight="17.0" prefWidth="103.0" />
+      <Label layoutX="240.0" layoutY="234.0" prefHeight="35.0" prefWidth="121.0" text="Оберіть тест" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Calibri Light" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmb_test" layoutX="225.0" layoutY="275.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-text-fill:#fffff; fx-background-color: #a5d6a7">
+         <effect>
+            <Blend />
+         </effect>
+      </ComboBox>
    </children>
 </AnchorPane>

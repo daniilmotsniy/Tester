@@ -17,11 +17,11 @@ public class Test {
     //Here we have all the txt file
     ArrayList<String> text = new ArrayList<>();
     //It keeps answers from user
-    HashMap<Integer, Character> answers = new HashMap<>();
-    //It keeps true answers
-    HashMap<Integer, Character> true_answers = new HashMap<>();
+//    HashMap<Integer, Character> answers = new HashMap<>(); // wasd array int[3]
+//    //It keeps true answers
+//    HashMap<Integer, Character> true_answers = new HashMap<>();
 
-    int i = 0; //Number of block with questions and answers
+    int i = 0; //Number of block with questions and answers wasd rename
     // block is the part of text that has 1 question and N (3) answers
 
     @FXML
@@ -50,10 +50,10 @@ public class Test {
     ToggleGroup answers_tgl = new ToggleGroup();
 
     //Path to txt file
-    static String path = "res/tests/test1.txt";  // I use static cause I dont know how to do it better :3
+    String path = "res/tests/test1.txt";
 
     //Variable for blocking buttons after test
-    boolean finished = false;
+    boolean finished = false; // wasd remove
 
     @FXML
     void initialize() throws Exception {
@@ -71,27 +71,34 @@ public class Test {
         //Main methods
         //Getting the txt by stoke
         getText();
+        //It keeps answers from user
+        int[] answers = new int[text.size()]; // wasd array int[3]
+        for(int i = 0; i < answers.length; i ++){
+            answers[i] = -1;
+        }
+        //It keeps true answers
+        int[] true_answers = new int[text.size()];
         //Getting true answers
-        getTrueAnswers();
+        getTrueAnswers(true_answers);
         //Delete '+' from text
         removeTrueSymbol();
         //Set inf-n on the page
         setInformation(i);
 
         btn_finish.setOnAction(event -> {
-            if(finished==false) {
+            if (finished == false) {
                 //Stop timer counting
                 start_time.f = false;
                 //Block other buttons
                 finished = true;
                 //Adding answ
-                addAnswer(i);
+                addAnswer(i, answers);
 
                 String result = "Резульат: " + result(answers, true_answers);
                 label_result.setText(result);
 
                 //Add finish time + result in txt file
-                try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
+                try (FileWriter writer = new FileWriter("res/students.txt", true))      // get name
                 {
                     String current_time = myDateObj.format(myFormatObj);
                     writer.append('\t');
@@ -99,39 +106,66 @@ public class Test {
                     writer.append('\t');
                     writer.write(result);
                     writer.append('\n');
-                }
-                catch(IOException ex){
+                } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
+
+                btn_next.setDisable(true); // wasd
+                btn_prev.setDisable(true);
+                btn_finish.setDisable(true);
             }
         });
 
         //Next btn
         btn_next.setOnAction(event -> {
-            if(finished==false) {
+            if (finished == false) {
                 if (i > text.size() / 4 - 1) {
                     i = text.size() / 4 - 1;
                 } else {
+                    addAnswer(i, answers);
+                    i++; // wasd
                     setInformation(i);
-                    addAnswer(i);
                 }
-                i++;
+
+                questionChanged(answers);
             }
         });
 
         //Prev btn
         btn_prev.setOnAction(event -> {
-            if(finished==false) {
+            if (finished == false) {
                 i--;
                 if (i < 0)
                     i = 0;
                 setInformation(i);
-                addAnswer(i);
+                addAnswer(i + 1, answers); // wasd
+
+                questionChanged(answers);
             }
         });
+
+        btn_prev.setDisable(true); // wasd
     }
 
-    void getText() throws  Exception {
+    private void questionChanged(int[] answers) { // wasd
+        btn_prev.setDisable(i == 0); // wasd
+        btn_next.setDisable(i == 2);
+
+        int option = answers[i];
+
+        System.out.println("Option: " + option);
+        System.out.println(answers.toString());
+
+        if (option != -1) {
+            option -= '0';
+
+            if (option == 1) answ_rb_0.setSelected(true);
+            if (option == 2) answ_rb_1.setSelected(true);
+            if (option == 3) answ_rb_2.setSelected(true);
+        }
+    }
+
+    void getText() throws Exception {
         FileReader reader = new FileReader(path);
         Scanner scan = new Scanner(reader);
         while (scan.hasNextLine()) {
@@ -140,22 +174,22 @@ public class Test {
         reader.close();
     }
 
-    void getTrueAnswers() throws Exception {
+    void getTrueAnswers(int[] true_answers) throws Exception {
         FileReader reader = new FileReader(path);
         Scanner scan = new Scanner(reader);
         int j = 0;
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
-            if(line.contains("+")){
-                   true_answers.put(j, line.charAt(0));
-                   j++;
+            if (line.contains("+")) {
+                true_answers[j] = line.charAt(0);
+                j++;
             }
         }
         reader.close();
     }
 
-    void removeTrueSymbol(){
-        for (int i = 0; i < text.size(); i++){
+    void removeTrueSymbol() {
+        for (int i = 0; i < text.size(); i++) {
             text.set(i, text.get(i).replace('+', ' '));
         }
     }
@@ -166,33 +200,35 @@ public class Test {
 //        }
 //    }
 
-    void setInformation(int i){
-        btn_next.setText("Наступне");
-
-        label_question.setText(text.get( i*4));
-        answ_rb_0.setText(text.get(1 + i*4));
-        answ_rb_1.setText(text.get(2 + i*4));
-        answ_rb_2.setText(text.get(3 + i*4));
+    void setInformation(int i) {
+        label_question.setText(text.get(i * 4));
+        answ_rb_0.setText(text.get(1 + i * 4));
+        answ_rb_1.setText(text.get(2 + i * 4));
+        answ_rb_2.setText(text.get(3 + i * 4));
     }
 
-    void addAnswer(int i) {
+    void addAnswer(int i, int[] answers) {
         if (answ_rb_0.isSelected() == true && answ_rb_1.isSelected() == false && answ_rb_2.isSelected() == false) {
-            answers.put(i, '1');
+            answers[i]=1;
         } else if (answ_rb_0.isSelected() == false && answ_rb_1.isSelected() == true && answ_rb_2.isSelected() == false) {
-            answers.put(i, '2');
+            answers[i]=2;
         } else if (answ_rb_0.isSelected() == false && answ_rb_1.isSelected() == false && answ_rb_2.isSelected() == true) {
-            answers.put(i, '3');
+            answers[i]=3;
         } else {
             System.out.printf("Error");
         }
-        System.out.println("Result: q - "+i+"/ a - " + answers.get(i));
+        System.out.println("Result: q - " + i + "/ a - " + answers[i]);
+
+        answ_rb_0.setSelected(false);
+        answ_rb_1.setSelected(false);
+        answ_rb_2.setSelected(false);
     }
 
-    int result(HashMap<Integer, Character> answers, HashMap<Integer, Character> true_answers){
+    int result(int[] answers, int[] true_answers) {
         int res = 0;
 
-        for(int i = 0; i < true_answers.size(); i++){
-            if(true_answers.get(i) == answers.get(i)){
+        for (int i = 0; i < true_answers.length; i++) {
+            if (true_answers[i] == answers[i]) {
                 res++;
             }
         }
