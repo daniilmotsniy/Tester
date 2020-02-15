@@ -58,11 +58,14 @@ public class Login {
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), FXCollections::observableArrayList)));
 
         cmb_test.getSelectionModel().select(0);
-        txt_field_name.setText("Git Bush :3");
+        txt_field_name.setText("Git Bush");
 
         btn_start.setOnAction(event -> {
             if (txt_field_name.getText().isEmpty()) {
                 lbl_error.setText("Заповніть поле!");
+            } else if (!txt_field_name.getText().matches(
+                    "^ *[A-Za-zА-Яа-яёЁЇїІіЄєҐґ'\\-]+ +[A-Za-zА-Яа-яёЁЇїІіЄєҐґ'\\- ]+ *$")) {
+                lbl_error.setText("Некоректне ім'я.");
             } else {
                 lbl_error.setText("");
 
@@ -76,24 +79,19 @@ public class Login {
                     String name_str = txt_field_name.getText();
                     String group_str = cmb_group.getSelectionModel().getSelectedItem();
                     String current_time = myDateObj.format(myFormatObj);
-                    writer.write(name_str);
-                    writer.append('\t');
-                    writer.write(group_str);
-                    writer.append('\t');
-                    writer.write(current_time);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
+                    writer.append(name_str).append('\t').append(group_str).append('\t').write(current_time);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 try {
                     AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
                     rootPaneLogin.getChildren().setAll(pane);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
-
     }
 
     void receiveTests(final File folder) {
