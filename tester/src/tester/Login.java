@@ -9,21 +9,27 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Login {
-    @FXML
-    private AnchorPane rootPaneLogin;
 
-    ObservableList<String> langs = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12");
-//    ObservableList<String> langs_test = FXCollections.observableArrayList();
+    ObservableList<String> langs_group = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12"); //DSAW
+    ObservableList<String> langs_test = FXCollections.observableArrayList();//
 
     LocalDateTime myDateObj = LocalDateTime.now();
     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
+    final File folder_tests = new File("res/tests"); //DSAW Folder with tests
+
+    public static String selectedTest; //DSAW
+
+    @FXML
+    private AnchorPane rootPaneLogin;
     @FXML
     private TextField txt_field_name;
     @FXML
@@ -38,18 +44,22 @@ public class Login {
     @FXML
     void initialize() {
         //Cmb with groups
-        cmb_group.setItems(langs);
+        cmb_group.setItems(langs_group);
         cmb_group.getSelectionModel().select(0);
         //Cmb with tests
-//        findTests(langs_test);
-//        cmb_group.setItems(langs_test);
-//        cmb_group.getSelectionModel().select(0);
+        receiveTests(folder_tests, langs_test);
+        cmb_test.setItems(langs_test);
+        cmb_test.getSelectionModel().select(0);
+        txt_field_name.setText("Git Bush :3");
 
         btn_start.setOnAction(event -> {
                 if(txt_field_name.getText().isEmpty()){
                     lbl_error.setText("Заповніть поле!");
                 } else {
                     lbl_error.setText("");
+
+                        //DSAW Get selected test
+                        selectedTest = cmb_test.getSelectionModel().getSelectedItem();
 
                         try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
                         {
@@ -78,9 +88,17 @@ public class Login {
         });
 
     }
+    
+    //DSAW Adding test name to array
+    void receiveTests(final File folder, ObservableList<String> langs_test){
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                receiveTests(fileEntry, langs_test);
+            } else {
+                langs_test.add(fileEntry.getName());
+            }
+        }
+    }
 
-//    void findTests(ObservableList<String> langs_test){
-//        langs_test.add();
-//    }
 }
 

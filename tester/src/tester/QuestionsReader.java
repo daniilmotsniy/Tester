@@ -3,10 +3,7 @@ package tester;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class QuestionsReader {
     private String[] lines;
@@ -15,16 +12,38 @@ public class QuestionsReader {
     private int questionSize;
 
     public QuestionsReader(String path, int variantsCount) throws IOException {
-        System.out.println("test");
-
         List<String> list = new ArrayList<>(32);
         FileReader fr = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
         String line;
+        int lineIndex = 1;
 
-        while ((line = br.readLine()) != null) {
-            if (line.trim().length() > 0) {
-                list.add(line);
+        for (; (line = br.readLine()) != null; ++lineIndex) {
+            line = line.trim();
+
+            if (line.length() == 0) {
+                continue;
+            }
+
+            if (line.equalsIgnoreCase("q")) {
+                break;
+            }
+
+            throw new IOException(String.format("Unexpected line at %d: %s", lineIndex, line));
+        }
+
+        out:
+        while (true) {
+            for (int j = 0; j < variantsCount; ++j) {
+                lineIndex = readLinesUntil(br, list, lineIndex, true);
+                if (lineIndex == -1) {
+                    break out;
+                }
+            }
+            lineIndex = readLinesUntil(br, list, lineIndex, false);
+
+            if (lineIndex == -1) {
+                break;
             }
         }
 
@@ -33,31 +52,41 @@ public class QuestionsReader {
 
         questionSize = 1 + variantsCount;
 
-        if (list.size() % questionSize != 0) {
+        if (list.size() % questionSize != 0) { // TODO maybe cannot execute
             throw new IOException("Wrong questions count");
         }
-
-        // TODO check if several variants are equal
 
         lines = list.toArray(new String[0]);
         answers = new int[getQuestionsCount()];
 
-        for (int i = 0; i < getQuestionsCount(); ++i) { // TODO optimize
-            String[] variants = new String[questionSize - 1];
+        Random rnd = new Random();
 
-            for (int j = 0; j < questionSize - 1; ++j) {
-                variants[j] = lines[i * questionSize + j + 1];
+        for (int i = 0; i < getQuestionsCount(); ++i) {
+            Set<String> set = new HashSet<>();
+
+            for (int j = 0; j < variantsCount; ++j) {
+                if (!set.add(lines[i * questionSize + j + 1])) {
+                    throw new IOException("Duplicated variants");
+                }
             }
 
-            String answer = variants[0];
+            int answer = 0;
 
-            List<String> shuffled = Arrays.asList(variants);
-            Collections.shuffle(shuffled);
+            for (int j = variantsCount - 1; j > 0; --j) {
+                int r = rnd.nextInt(j + 1);
+                String tmp = lines[i * questionSize + r + 1];
+                lines[i * questionSize + r + 1] = lines[i * questionSize + j + 1];
+                lines[i * questionSize + j + 1] = tmp;
+                if (r == answer)
+                    answer = j;
+                else if (j == answer)
+                    answer = r;
+            }
 
-            answers[i] = shuffled.indexOf(answer);
+            answers[i] = answer;
 
-            for (int j = 0; j < shuffled.size(); ++j) {
-                lines[i * questionSize + j + 1] = shuffled.get(j);
+            for (int j = 0; j < variantsCount; ++j) {
+                lines[i * questionSize + j + 1] = lines[i * questionSize + j + 1];
             }
         }
     }
@@ -85,6 +114,27 @@ public class QuestionsReader {
 
     public int getAnswerIndex(int questionIndex) {
         return answers[questionIndex];
+    }
+
+    private int readLinesUntil(BufferedReader br, List<String> to, int lineIndex, boolean untilAnswer) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        String line;
+        boolean endOfFile = true;
+
+        while ((line = br.readLine()) != null) {
+            if (line.equalsIgnoreCase(untilAnswer ? "a" : "q")) {
+                endOfFile = false;
+                break;
+            }
+            if (line.equalsIgnoreCase(untilAnswer ? "q" : "a")) {
+                throw new IOException(String.format("Unexpected line at %d: %s", lineIndex, line));
+            }
+            builder.append(line).append('\n');
+            ++lineIndex;
+        }
+
+        to.add(builder.toString().trim());
+        return endOfFile ? -1 : (lineIndex + 1);
     }
 
     @Override

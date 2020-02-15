@@ -29,7 +29,7 @@ public class Timer {
                     Platform.runLater(()-> //Platform for thread in JavaFX
                     {
                         seconds++; // Seconds increment
-                        System.out.println("Time - " + seconds);
+//                        System.out.println("Time - " + seconds);
                         label_time.setText("Часу минуло: " + seconds);
                     });
                 }

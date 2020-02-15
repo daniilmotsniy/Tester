@@ -49,5 +49,10 @@
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
+      <Label fx:id="error_lbl" layoutX="27.0" layoutY="50.0" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #798#c5cae96cb;" textFill="WHITE">
+         <font>
+            <Font name="Calibri Light" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
