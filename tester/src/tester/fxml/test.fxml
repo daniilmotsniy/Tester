@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
+<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
-      <Label fx:id="label_question" layoutX="109.0" layoutY="109.0" prefHeight="221.0" prefWidth="382.0" style="-fx-background-color: #798#c5cae96cb;" textFill="WHITE">
+      <Label fx:id="label_question" layoutX="111.0" layoutY="141.0" prefHeight="221.0" prefWidth="382.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
@@ -20,7 +20,7 @@
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_question1" layoutX="261.0" layoutY="50.0" prefHeight="36.0" prefWidth="78.0" text="Питання" textFill="WHITE">
+      <Label fx:id="label_question1" layoutX="134.0" layoutY="47.0" prefHeight="36.0" prefWidth="337.0" text="Питання" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="22.0" />
          </font>
@@ -37,19 +37,15 @@
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <Button fx:id="btn_finish" layoutX="248.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
+      <Button fx:id="btn_finish" layoutX="248.0" layoutY="506.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_result" layoutX="417.0" layoutY="521.0" prefHeight="52.0" prefWidth="148.0" textFill="WHITE">
+      <Label fx:id="label_time" layoutX="250.0" layoutY="550.0" prefHeight="36.0" prefWidth="104.0" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
-      <Label fx:id="label_time" layoutX="19.0" layoutY="521.0" prefHeight="52.0" prefWidth="148.0" textFill="WHITE">
-         <font>
-            <Font name="Calibri Light" size="14.0" />
-         </font></Label>
-      <Label fx:id="error_lbl" layoutX="27.0" layoutY="50.0" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #798#c5cae96cb;" textFill="WHITE">
+      <Label fx:id="error_lbl" layoutX="220.0" layoutY="97.0" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font>
