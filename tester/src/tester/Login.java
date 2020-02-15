@@ -15,18 +15,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Login {
 
-    ObservableList<String> langs_group = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12"); //DSAW
-    ObservableList<String> langs_test = FXCollections.observableArrayList();//
+    ObservableList<String> langs_group = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12");
+    List<File> langs_test = new ArrayList<>();
 
     LocalDateTime myDateObj = LocalDateTime.now();
     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    final File folder_tests = new File("res/tests"); //DSAW Folder with tests
+    final File folder_tests = new File("res/tests"); //Folder with tests
 
-    public static String selectedTest; //DSAW
+    public static String selectedTest;
 
     @FXML
     private AnchorPane rootPaneLogin;
@@ -47,58 +50,66 @@ public class Login {
         cmb_group.setItems(langs_group);
         cmb_group.getSelectionModel().select(0);
         //Cmb with tests
-        receiveTests(folder_tests, langs_test);
-        cmb_test.setItems(langs_test);
+        receiveTests(folder_tests);
+
+        // set each ComboBox item to test file name's (without extension)
+        cmb_test.setItems(langs_test.stream()
+                .map(Login::getNameWithoutExtension)
+                .collect(Collectors.collectingAndThen(Collectors.toSet(), FXCollections::observableArrayList)));
+
         cmb_test.getSelectionModel().select(0);
         txt_field_name.setText("Git Bush :3");
 
         btn_start.setOnAction(event -> {
-                if(txt_field_name.getText().isEmpty()){
-                    lbl_error.setText("Заповніть поле!");
-                } else {
-                    lbl_error.setText("");
+            if (txt_field_name.getText().isEmpty()) {
+                lbl_error.setText("Заповніть поле!");
+            } else {
+                lbl_error.setText("");
 
-                        //DSAW Get selected test
-                        selectedTest = cmb_test.getSelectionModel().getSelectedItem();
+                // find test file with selected name
+                selectedTest = langs_test.stream().filter(
+                        i -> getNameWithoutExtension(i).equals(cmb_test.getSelectionModel().getSelectedItem())
+                ).collect(Collectors.toList()).get(0).getPath();
 
-                        try(FileWriter writer = new FileWriter("res/students.txt", true))      // get name
-                        {
-                            String name_str = txt_field_name.getText();
-                            String group_str = cmb_group.getSelectionModel().getSelectedItem();
-                            String current_time = myDateObj.format(myFormatObj);
-                            writer.write(name_str);
-                            writer.append('\t');
-                            writer.write(group_str);
-                            writer.append('\t');
-                            writer.write(current_time);
-                        }
-                        catch(IOException ex){
-                            System.out.println(ex.getMessage());
-                        }
-
-                        try {
-                            AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
-                            rootPaneLogin.getChildren().setAll(pane);
-                        }
-                        catch (Exception e)
-                        {
-                            System.out.println(e.getMessage());
-                        }
+                try (FileWriter writer = new FileWriter("res/students.txt", true))      // get name
+                {
+                    String name_str = txt_field_name.getText();
+                    String group_str = cmb_group.getSelectionModel().getSelectedItem();
+                    String current_time = myDateObj.format(myFormatObj);
+                    writer.write(name_str);
+                    writer.append('\t');
+                    writer.write(group_str);
+                    writer.append('\t');
+                    writer.write(current_time);
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
                 }
+
+                try {
+                    AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
+                    rootPaneLogin.getChildren().setAll(pane);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         });
 
     }
-    
-    //DSAW Adding test name to array
-    void receiveTests(final File folder, ObservableList<String> langs_test){
+
+    void receiveTests(final File folder) {
+        //noinspection ConstantConditions
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                receiveTests(fileEntry, langs_test);
+                receiveTests(fileEntry);
             } else {
-                langs_test.add(fileEntry.getName());
+                langs_test.add(fileEntry);
             }
         }
     }
 
+    private static String getNameWithoutExtension(File f) {
+        String name = f.getName();
+        return name.substring(0, name.lastIndexOf('.'));
+    }
 }
 
