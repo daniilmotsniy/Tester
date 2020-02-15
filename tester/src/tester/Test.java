@@ -21,7 +21,7 @@ public class Test {
     @FXML
     private Label label_question;
     @FXML
-    private Label label_result;
+    private Label label_question1;
     @FXML
     private Button btn_prev;
     @FXML
@@ -37,7 +37,7 @@ public class Test {
     @FXML
     private Label error_lbl;
 
-    private RadioButton[] answ_rb;
+    private RadioButton[] answ_rbs;
 
     // Date format
     LocalDateTime myDateObj = LocalDateTime.now();
@@ -46,7 +46,7 @@ public class Test {
     ToggleGroup answers_tgl = new ToggleGroup();
 
     //Path to txt file
-    String path = "res/tests/" + Login.selectedTest; //DSAW
+    String path = Login.selectedTest;
 
     private QuestionsReader questionsReader;
 
@@ -59,9 +59,9 @@ public class Test {
         start_time.runTime();
 
         //Setting toggle group
-        answ_rb = new RadioButton[]{answ_rb_0, answ_rb_1, answ_rb_2};
+        answ_rbs = new RadioButton[]{answ_rb_0, answ_rb_1, answ_rb_2};
 
-        for (RadioButton button : answ_rb) {
+        for (RadioButton button : answ_rbs) {
             button.setToggleGroup(answers_tgl);
         }
 
@@ -84,7 +84,8 @@ public class Test {
             addAnswer(answers);
 
             String result = "Результат: " + result(answers);
-            label_result.setText(result);
+            label_question.setText(result);
+            label_question1.setText("Тест пройдено");
 
             //Add finish time + result in txt file
             try (FileWriter writer = new FileWriter("res/students.txt", true)) { // get name
@@ -98,6 +99,9 @@ public class Test {
             btn_next.setDisable(true);
             btn_prev.setDisable(true);
             btn_finish.setDisable(true);
+            for (RadioButton button : answ_rbs) {
+                button.setVisible(false);
+            }
         });
 
         //Next btn
@@ -134,23 +138,23 @@ public class Test {
         int option = answers[questionIndex];
 
         if (option != -1) {
-            answ_rb[option].setSelected(true);
+            answ_rbs[option].setSelected(true);
         }
     }
 
     void setInformation() {
         label_question.setText(questionsReader.getQuestions()[questionIndex]);
         String[] variants = questionsReader.getVariants(questionIndex);
-        for (int i = 0; i < answ_rb.length; ++i) {
-            answ_rb[i].setText(variants[i]);
+        for (int i = 0; i < answ_rbs.length; ++i) {
+            answ_rbs[i].setText(variants[i]);
         }
     }
 
     void addAnswer(int[] answers) {
         int selected = -1;
 
-        for (int i = 0; i < answ_rb.length; ++i) {
-            if (answ_rb[i].isSelected()) {
+        for (int i = 0; i < answ_rbs.length; ++i) {
+            if (answ_rbs[i].isSelected()) {
                 if (selected == -1) {
                     selected = i;
                 } else {
@@ -167,7 +171,7 @@ public class Test {
 
         System.out.println("Result: q - " + questionIndex + "/ a - " + answers[questionIndex]);
 
-        for (RadioButton button : answ_rb) {
+        for (RadioButton button : answ_rbs) {
             button.setSelected(false);
         }
     }
