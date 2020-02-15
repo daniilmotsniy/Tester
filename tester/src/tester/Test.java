@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
+import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -147,6 +148,16 @@ public class Test {
         String[] variants = questionsReader.getVariants(questionIndex);
         for (int i = 0; i < answ_rbs.length; ++i) {
             answ_rbs[i].setText(variants[i]);
+        }
+
+        try {
+            BufferedImage image = questionsReader.getPicture(questionIndex);
+
+            if (image != null) {
+                System.out.printf("Question %d has image (width = %d)", questionIndex, image.getWidth());
+            }
+        } catch (IOException e) {
+            showExceptionAndExit("Помилка читання зображення", e);
         }
     }
 

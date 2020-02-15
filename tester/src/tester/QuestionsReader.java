@@ -1,15 +1,20 @@
 package tester;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import javafx.util.Pair;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class QuestionsReader {
     private String[] lines;
     private int[] answers;
 
     private int questionSize;
+
+    private HashMap<Integer, File> pictures;
 
     public QuestionsReader(String path, int variantsCount) throws IOException {
         List<String> list = new ArrayList<>(32);
@@ -29,32 +34,71 @@ public class QuestionsReader {
                 break;
             }
 
+            br.close();
+            fr.close();
             throw new IOException(String.format("Unexpected line at %d: %s", lineIndex, line));
         }
 
-        out:
-        while (true) {
-            for (int j = 0; j < variantsCount; ++j) {
-                lineIndex = readLinesUntil(br, list, lineIndex, true);
-                if (lineIndex == -1) {
-                    break out;
+        Character previousToken = 'q', lastToken = null;
+        int sameTokensInARow = 1;
+        int questionIndex = 0;
+
+        do {
+            for (int j = 0; j < 1 + variantsCount; ++j) {
+                Pair<Integer, Pair<Character, String>> pair = readLinesUntilNextBreakToken(br, lineIndex);
+                lineIndex = pair.getKey();
+                lastToken = pair.getValue().getKey();
+                line = pair.getValue().getValue();
+
+                if (previousToken == 'p') {
+                    if (pictures == null) {
+                        pictures = new HashMap<>(4);
+                    }
+
+                    File file = new File(line);
+
+                    if (!file.exists()) {
+                        br.close();
+                        fr.close();
+                        throw new FileNotFoundException(String.format("Image %s not found", line));
+                    }
+
+                    pictures.put(questionIndex, file);
+                } else {
+                    list.add(line);
+                }
+
+                if (lastToken != null) {
+                    if (lastToken == 'p') {
+                        --j;
+                    }
+
+                    if (lastToken == previousToken) {
+                        ++sameTokensInARow;
+
+                        if (lastToken == 'a' && sameTokensInARow > variantsCount
+                                || (lastToken == 'q' || lastToken == 'p') && sameTokensInARow > 1) {
+                            br.close();
+                            fr.close();
+                            throw new IOException(String.format("Unexpected token at %d: %c", lineIndex, lastToken));
+                        }
+                    } else {
+                        sameTokensInARow = 1;
+                        previousToken = lastToken;
+                    }
                 }
             }
-            lineIndex = readLinesUntil(br, list, lineIndex, false);
-
-            if (lineIndex == -1) {
-                break;
-            }
-        }
+            ++questionIndex;
+        } while (lastToken != null);
 
         br.close();
         fr.close();
 
-        questionSize = 1 + variantsCount;
-
-        if (list.size() % questionSize != 0) { // TODO maybe cannot execute
+        if (!Objects.equals(previousToken, 'a') || sameTokensInARow != variantsCount) {
             throw new IOException("Wrong questions count");
         }
+
+        questionSize = 1 + variantsCount;
 
         lines = list.toArray(new String[0]);
         answers = new int[getQuestionsCount()];
@@ -116,25 +160,31 @@ public class QuestionsReader {
         return answers[questionIndex];
     }
 
-    private int readLinesUntil(BufferedReader br, List<String> to, int lineIndex, boolean untilAnswer) throws IOException {
+    public BufferedImage getPicture(int questionIndex) throws IOException {
+        if (pictures == null) {
+            return null;
+        }
+
+        File file = pictures.getOrDefault(questionIndex, null);
+
+        return file == null ? null : ImageIO.read(file);
+    }
+
+    private Pair<Integer, Pair<Character, String>> readLinesUntilNextBreakToken(BufferedReader br, int lineIndex) throws IOException {
         StringBuilder builder = new StringBuilder();
         String line;
-        boolean endOfFile = true;
+
+        List<Character> tokens = Arrays.asList('a', 'q', 'p');
 
         while ((line = br.readLine()) != null) {
-            if (line.equalsIgnoreCase(untilAnswer ? "a" : "q")) {
-                endOfFile = false;
+            if (line.length() == 1 && tokens.contains(Character.toLowerCase(line.charAt(0)))) {
                 break;
-            }
-            if (line.equalsIgnoreCase(untilAnswer ? "q" : "a")) {
-                throw new IOException(String.format("Unexpected line at %d: %s", lineIndex, line));
             }
             builder.append(line).append('\n');
             ++lineIndex;
         }
 
-        to.add(builder.toString().trim());
-        return endOfFile ? -1 : (lineIndex + 1);
+        return new Pair<>(lineIndex, new Pair<>(line == null ? null : Character.toLowerCase(line.charAt(0)), builder.toString().trim()));
     }
 
     @Override

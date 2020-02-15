@@ -8,6 +8,9 @@ q
 third line
 fourth line
 
+p
+res/pictures/test.png
+
 
 A
 Багато.

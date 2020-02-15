@@ -12,7 +12,8 @@ a
 0.
 A
 2.
-
+p
+res/pictures/test.png
 
 Q
 Скільки буде "2" + "2"?
