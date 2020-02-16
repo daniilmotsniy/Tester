@@ -4,8 +4,9 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 
 public class Timer {
-    //Seconds
+    //Time measure
     public int seconds = 0;
+    public int minutes = 0;
     //On/off
     boolean f = false;
 
@@ -30,7 +31,15 @@ public class Timer {
                     {
                         seconds++; // Seconds increment
 //                        System.out.println("Time - " + seconds);
-                        label_time.setText("Часу минуло: " + seconds);
+                        if(seconds==60){
+                            minutes++;
+                            seconds = 0;
+                        }
+                        if (minutes > 0) {
+                            label_time.setText("Часу минуло: " + minutes + " хв " + seconds + " с");
+                        } else {
+                            label_time.setText("Часу минуло: " + seconds + " с");
+                        }
                     });
                 }
             }

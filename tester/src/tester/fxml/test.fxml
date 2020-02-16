@@ -41,7 +41,7 @@
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_time" alignment="CENTER" contentDisplay="CENTER" layoutX="250.0" layoutY="550.0" prefHeight="36.0" prefWidth="104.0" textFill="WHITE">
+      <Label fx:id="label_time" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="556.0" prefHeight="30.0" prefWidth="206.0" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
