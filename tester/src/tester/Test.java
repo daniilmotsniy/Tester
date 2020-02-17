@@ -2,12 +2,15 @@ package tester;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
+import javax.swing.event.TreeModelEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +23,8 @@ public class Test {
     // block is the part of text that has 1 question and N (3) answers
 
     @FXML
+    private AnchorPane rootPaneLogin;
+    @FXML
     private Label label_time;
     @FXML
     private Label label_question;
@@ -31,6 +36,8 @@ public class Test {
     private Button btn_next;
     @FXML
     private Button btn_finish;
+    @FXML
+    private Button btn_login;
     @FXML
     private RadioButton answ_rb_0;
     @FXML
@@ -135,6 +142,16 @@ public class Test {
         });
 
         btn_prev.setDisable(true);
+
+        //Login btn
+        btn_login.setOnAction(event -> {
+            try {
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
+                rootPaneLogin.getChildren().setAll(pane);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void questionChanged(int[] answers) {
@@ -159,7 +176,7 @@ public class Test {
             BufferedImage image = questionsReader.getPicture(questionIndex);
 
             if (image != null) {
-                image_view.setImage(SwingFXUtils.toFXImage(image, null));
+//                image_view.setImage(SwingFXUtils.toFXImage(image, null));
             }
         } catch (IOException e) {
             showExceptionAndExit("Помилка читання зображення", e);
