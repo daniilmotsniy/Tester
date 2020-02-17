@@ -30,7 +30,6 @@ public class Timer {
                     Platform.runLater(()-> //Platform for thread in JavaFX
                     {
                         seconds++; // Seconds increment
-//                        System.out.println("Time - " + seconds);
                         if(seconds==60){
                             minutes++;
                             seconds = 0;

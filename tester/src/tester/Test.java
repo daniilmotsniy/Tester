@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
+import javax.swing.text.html.ImageView;
 import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,8 +38,11 @@ public class Test {
     private RadioButton answ_rb_2;
     @FXML
     private Label error_lbl;
+    @FXML
+    private ImageView imageView;
 
     private RadioButton[] answ_rbs;
+
 
     // Date format
     LocalDateTime myDateObj = LocalDateTime.now();
@@ -155,6 +159,7 @@ public class Test {
 
             if (image != null) {
                 System.out.printf("Question %d has image (width = %d)", questionIndex, image.getWidth());
+                
             }
         } catch (IOException e) {
             showExceptionAndExit("Помилка читання зображення", e);
@@ -200,7 +205,7 @@ public class Test {
 
     private void showExceptionAndExit(String message, Exception e) { // TODO add message to GUI
         System.err.println(message + '\n' + e.getLocalizedMessage());
-        error_lbl.setText(message + '\n' + e.getLocalizedMessage()); //DSAW Done ?
+        error_lbl.setText(message + '\n' + e.getLocalizedMessage());
         System.exit(-1);
     }
 }
