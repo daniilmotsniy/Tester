@@ -175,11 +175,7 @@ public class Test {
         try {
             BufferedImage image = questionsReader.getPicture(questionIndex);
 
-            if (image != null) {
-                image_view.setImage(SwingFXUtils.toFXImage(image, null));
-            } else {
-                image_view.setImage(null);
-            }
+            image_view.setImage(image == null ? null : SwingFXUtils.toFXImage(image, null));
         } catch (IOException e) {
             showExceptionAndExit("Помилка читання зображення", e);
         }
