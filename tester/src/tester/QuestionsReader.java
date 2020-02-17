@@ -10,14 +10,64 @@ import java.util.List;
 
 public class QuestionsReader {
     private String[] lines;
-    private int[] answers;
+    private Integer[] answers;
 
     private int questionSize;
 
     private HashMap<Integer, File> pictures;
 
     public QuestionsReader(String path, int variantsCount) throws IOException {
-        List<String> list = new ArrayList<>(32);
+        List<String> list = readFile(path, variantsCount);
+
+        questionSize = 1 + variantsCount;
+
+        lines = list.toArray(new String[0]);
+        answers = new Integer[getQuestionsCount()];
+
+        shuffleAnswers(variantsCount); // )
+        shuffleAnswers(variantsCount);
+        shuffleAnswers(variantsCount);
+        shuffleAnswers(variantsCount);
+    }
+
+    public int getQuestionsCount() {
+        return lines.length / questionSize;
+    }
+
+    public String[] getQuestions() {
+        String[] result = new String[getQuestionsCount()];
+        for (int i = 0; i < getQuestionsCount(); ++i) {
+            result[i] = lines[i * questionSize];
+        }
+        return result;
+    }
+
+    public String[] getVariants(int questionIndex) {
+        String[] variants = new String[questionSize - 1];
+        for (int i = 0; i < questionSize - 1; ++i) {
+            variants[i] = lines[questionIndex * questionSize + i + 1];
+        }
+
+        return variants;
+    }
+
+    public int getAnswerIndex(int questionIndex) {
+        return answers[questionIndex];
+    }
+
+    public BufferedImage getPicture(int questionIndex) throws IOException {
+        if (pictures == null) {
+            return null;
+        }
+
+        File file = pictures.getOrDefault(questionIndex, null);
+
+        return file == null ? null : ImageIO.read(file);
+    }
+
+    private List<String> readFile(String path, int variantsCount) throws IOException {
+        List<String> result = new ArrayList<>(32);
+
         FileReader fr = new FileReader(path);
         BufferedReader br = new BufferedReader(fr);
         String line;
@@ -65,7 +115,7 @@ public class QuestionsReader {
 
                     pictures.put(questionIndex, file);
                 } else {
-                    list.add(line);
+                    result.add(line);
                 }
 
                 if (lastToken != null) {
@@ -98,11 +148,10 @@ public class QuestionsReader {
             throw new IOException("Wrong questions count");
         }
 
-        questionSize = 1 + variantsCount;
+        return result;
+    }
 
-        lines = list.toArray(new String[0]);
-        answers = new int[getQuestionsCount()];
-
+    private void shuffleAnswers(int variantsCount) throws IOException {
         Random rnd = new Random();
 
         for (int i = 0; i < getQuestionsCount(); ++i) {
@@ -114,7 +163,7 @@ public class QuestionsReader {
                 }
             }
 
-            int answer = 0;
+            int answer = answers[i] == null ? 0 : answers[i];
 
             for (int j = variantsCount - 1; j > 0; --j) {
                 int r = rnd.nextInt(j + 1);
@@ -133,41 +182,6 @@ public class QuestionsReader {
                 lines[i * questionSize + j + 1] = lines[i * questionSize + j + 1];
             }
         }
-    }
-
-    public int getQuestionsCount() {
-        return lines.length / questionSize;
-    }
-
-    public String[] getQuestions() {
-        String[] result = new String[getQuestionsCount()];
-        for (int i = 0; i < getQuestionsCount(); ++i) {
-            result[i] = lines[i * questionSize];
-        }
-        return result;
-    }
-
-    public String[] getVariants(int questionIndex) {
-        String[] variants = new String[questionSize - 1];
-        for (int i = 0; i < questionSize - 1; ++i) {
-            variants[i] = lines[questionIndex * questionSize + i + 1];
-        }
-
-        return variants;
-    }
-
-    public int getAnswerIndex(int questionIndex) {
-        return answers[questionIndex];
-    }
-
-    public BufferedImage getPicture(int questionIndex) throws IOException {
-        if (pictures == null) {
-            return null;
-        }
-
-        File file = pictures.getOrDefault(questionIndex, null);
-
-        return file == null ? null : ImageIO.read(file);
     }
 
     private Pair<Integer, Pair<Character, String>> readLinesUntilNextBreakToken(BufferedReader br, int lineIndex) throws IOException {
@@ -189,6 +203,6 @@ public class QuestionsReader {
 
     @Override
     public String toString() {
-        return String.join("\n", lines);
+        return String.join("\n", lines) + "\n\n" + Arrays.toString(answers);
     }
 }
