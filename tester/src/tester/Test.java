@@ -1,12 +1,13 @@
 package tester;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 
-import javax.swing.text.html.ImageView;
 import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class Test {
     @FXML
     private Label error_lbl;
     @FXML
-    private ImageView imageView;
+    private ImageView image_view;
 
     private RadioButton[] answ_rbs;
 
@@ -158,8 +159,7 @@ public class Test {
             BufferedImage image = questionsReader.getPicture(questionIndex);
 
             if (image != null) {
-                System.out.printf("Question %d has image (width = %d)", questionIndex, image.getWidth());
-                
+                image_view.setImage(SwingFXUtils.toFXImage(image, null));
             }
         } catch (IOException e) {
             showExceptionAndExit("Помилка читання зображення", e);
