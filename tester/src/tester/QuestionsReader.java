@@ -9,8 +9,10 @@ import java.util.*;
 import java.util.List;
 
 public class QuestionsReader {
+    private static final byte SALT = -42;
+
     private String[] lines;
-    private Integer[] answers;
+    private byte[] answers;
 
     private int questionSize;
 
@@ -22,12 +24,32 @@ public class QuestionsReader {
         questionSize = 1 + variantsCount;
 
         lines = list.toArray(new String[0]);
-        answers = new Integer[getQuestionsCount()];
 
-        shuffleAnswers(variantsCount); // )
-        shuffleAnswers(variantsCount);
-        shuffleAnswers(variantsCount);
-        shuffleAnswers(variantsCount);
+        if (answers == null) {
+            answers = new byte[getQuestionsCount()];
+
+            shuffleAnswers(variantsCount);
+
+            String key = toEncryptedString(answers);
+
+            FileWriter fw = new FileWriter(path + "_");
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.append(key).write("\n");
+
+            for (int i = 0; i < lines.length; ++i) {
+                bw.append((i & 3) == 0 ? "Q" : "A").append("\n").append(lines[i]).write("\n");
+                File picture = pictures == null ? null : pictures.getOrDefault(i / questionSize, null);
+                if ((i & 3) == 3 && picture != null) {
+                    bw.append("P").append("\n").append(picture.getPath()).write("\n");
+                }
+            }
+
+            bw.flush();
+
+            bw.close();
+            fw.close();
+        }
     }
 
     public int getQuestionsCount() {
@@ -56,11 +78,7 @@ public class QuestionsReader {
     }
 
     public BufferedImage getPicture(int questionIndex) throws IOException {
-        if (pictures == null) {
-            return null;
-        }
-
-        File file = pictures.getOrDefault(questionIndex, null);
+        File file = pictures == null ? null : pictures.getOrDefault(questionIndex, null);
 
         return file == null ? null : ImageIO.read(file);
     }
@@ -73,11 +91,19 @@ public class QuestionsReader {
         String line;
         int lineIndex = 1;
 
+        String key = null;
+
         for (; (line = br.readLine()) != null; ++lineIndex) {
             line = line.trim();
 
             if (line.length() == 0) {
                 continue;
+            }
+
+            if (line.matches("^[0-9]+$")) {
+                key = line;
+
+                line = br.readLine();
             }
 
             if (line.equalsIgnoreCase("q")) {
@@ -144,8 +170,12 @@ public class QuestionsReader {
         br.close();
         fr.close();
 
-        if (!Objects.equals(previousToken, 'a') || sameTokensInARow != variantsCount) {
-            throw new IOException("Wrong questions count");
+//        if (!Objects.equals(previousToken, 'a') || sameTokensInARow != variantsCount) { TODO check
+//            throw new IOException("Wrong questions count");
+//        }
+
+        if (key != null) {
+            answers = toDecryptedArray(key, result.size() / (1 + variantsCount));
         }
 
         return result;
@@ -163,7 +193,7 @@ public class QuestionsReader {
                 }
             }
 
-            int answer = answers[i] == null ? 0 : answers[i];
+            int answer = answers[i];
 
             for (int j = variantsCount - 1; j > 0; --j) {
                 int r = rnd.nextInt(j + 1);
@@ -176,7 +206,7 @@ public class QuestionsReader {
                     answer = r;
             }
 
-            answers[i] = answer;
+            answers[i] = (byte) answer;
 
             for (int j = 0; j < variantsCount; ++j) {
                 lines[i * questionSize + j + 1] = lines[i * questionSize + j + 1];
@@ -199,6 +229,68 @@ public class QuestionsReader {
         }
 
         return new Pair<>(lineIndex, new Pair<>(line == null ? null : Character.toLowerCase(line.charAt(0)), builder.toString().trim()));
+    }
+
+    private static String toEncryptedString(byte[] data) {
+        byte[] encrypted = encrypt(data);
+
+        StringBuilder builder = new StringBuilder();
+
+        for (byte b : encrypted) {
+            builder.append(b);
+        }
+
+        return builder.toString();
+    }
+
+    private static byte[] toDecryptedArray(String str, int count) {
+        byte[] result = new byte[count];
+
+        for (int i = 0; i < count; ++i) {
+            result[i] = (byte) (str.charAt(i) - '0');
+        }
+
+        return decrypt(result, count);
+    }
+
+    private static byte[] encrypt(byte[] in) {
+        byte[] en1 = encode(in);
+
+        xorAll(en1);
+
+        return decode(en1, in.length);
+    }
+
+    private static byte[] decrypt(byte[] data, int count) {
+        return decode(xorAll(encode(data)), count);
+    }
+
+    private static byte[] encode(byte[] data) {
+        byte[] result = new byte[(data.length - 1) / 4 + 1];
+
+        for (int i = 0; i < data.length; ++i) {
+            result[i / 4] |= (byte) (data[i] << ((3 - (i & 0b11)) * 2));
+        }
+
+        return result;
+    }
+
+    private static byte[] decode(byte[] bytes, int count) {
+        byte[] result = new byte[count];
+
+        for (int i = 0; i < count; ++i) {
+            result[i] = (byte) ((bytes[i / 4] >>> ((3 - (i & 0b11)) * 2)) & 0b11);
+        }
+
+        return result;
+    }
+
+    private static byte[] xorAll(byte[] data) {
+        for (int i = 0; i < data.length; ++i) {
+            data[i] ^= SALT;
+        }
+
+        return data;
     }
 
     @Override
