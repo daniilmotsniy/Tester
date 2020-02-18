@@ -55,10 +55,11 @@ public class Login {
         // set each ComboBox item to test file name's (without extension)
         cmb_test.setItems(langs_test.stream()
                 .map(Login::getNameWithoutExtension)
-                .collect(Collectors.collectingAndThen(Collectors.toSet(), FXCollections::observableArrayList)));
+                .collect(Collectors.collectingAndThen(Collectors.toSet(), FXCollections::observableArrayList)).sorted());
 
         cmb_test.getSelectionModel().select(0);
-        txt_field_name.setText("Git Bush");
+
+        txt_field_name.setText("Git Bush"); // DBG
 
         btn_start.setOnAction(event -> {
             if (txt_field_name.getText().isEmpty()) {
@@ -79,7 +80,7 @@ public class Login {
                     String name_str = txt_field_name.getText();
                     String group_str = cmb_group.getSelectionModel().getSelectedItem();
                     String current_time = myDateObj.format(myFormatObj);
-                    writer.append(name_str).append('\t').append(group_str).append('\t').write(current_time);
+                    writer.append(name_str).append('\t').append(group_str).append('\t').append(current_time).write('\n');
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
