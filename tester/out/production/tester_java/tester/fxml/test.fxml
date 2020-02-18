@@ -38,7 +38,7 @@
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <Button fx:id="btn_finish" alignment="CENTER" contentDisplay="CENTER" layoutX="248.0" layoutY="506.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
+      <Button fx:id="btn_finish" alignment="CENTER" contentDisplay="CENTER" layoutX="248.0" layoutY="525.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
@@ -51,11 +51,11 @@
             <Font name="Calibri Light" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btn_login" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="122.0" style="-fx-background-color: #66cc68;" text="Головне меню" textFill="WHITE">
+      <Button fx:id="btn_login" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="123.0" style="-fx-background-color: #66cc68;" text="Головне меню" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font>
       </Button>
-      <ImageView fx:id="image_view" layoutX="120.0" layoutY="173.0"  />
+      <ImageView fx:id="image_view" fitHeight="145.0" fitWidth="490.0" layoutX="59.0" layoutY="175.0" />
    </children>
 </AnchorPane>
