@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.List;
 
 public class QuestionsReader {
-    private static final byte SALT = -42;
+    private static final byte SALT = -66;
 
     // tokens must be lower case in the code, but they can be any in files
     private static final String TOKEN_QUESTION = "q";
