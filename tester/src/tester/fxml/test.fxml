@@ -7,55 +7,55 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
+<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
-      <Label fx:id="label_question" alignment="CENTER" layoutX="16.0" layoutY="137.0" prefHeight="221.0" prefWidth="568.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="label_question" alignment="CENTER" layoutX="16.0" layoutY="109.0" prefHeight="368.0" prefWidth="573.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
-      <Button fx:id="btn_next" alignment="CENTER" contentDisplay="CENTER" layoutX="439.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Наступне" textFill="WHITE">
+      <Button fx:id="btn_next" alignment="CENTER" contentDisplay="CENTER" layoutX="682.0" layoutY="495.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Наступне" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Button fx:id="btn_prev" alignment="CENTER" layoutX="41.0" layoutY="468.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Попереднє" textFill="WHITE">
+      <Button fx:id="btn_prev" alignment="CENTER" layoutX="14.0" layoutY="495.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Попереднє" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_question1" alignment="CENTER" layoutX="132.0" layoutY="61.0" prefHeight="36.0" prefWidth="337.0" text="Питання" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="label_question1" alignment="CENTER" layoutX="243.0" layoutY="11.0" prefHeight="36.0" prefWidth="337.0" text="Питання" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="22.0" />
          </font>
       </Label>
-      <RadioButton fx:id="answ_rb_0" layoutX="57.0" layoutY="384.0" mnemonicParsing="false" text="first answ" textFill="WHITE">
+      <RadioButton fx:id="answ_rb_0" layoutX="633.0" layoutY="137.0" mnemonicParsing="false" text="first answ" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <RadioButton fx:id="answ_rb_1" contentDisplay="CENTER" layoutX="266.0" layoutY="384.0" mnemonicParsing="false" text="sec answ" textFill="WHITE">
+      <RadioButton fx:id="answ_rb_1" contentDisplay="CENTER" layoutX="635.0" layoutY="282.0" mnemonicParsing="false" text="sec answ" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <RadioButton fx:id="answ_rb_2" contentDisplay="RIGHT" layoutX="439.0" layoutY="384.0" mnemonicParsing="false" text="thrd" textFill="WHITE">
+      <RadioButton fx:id="answ_rb_2" contentDisplay="RIGHT" layoutX="635.0" layoutY="409.0" mnemonicParsing="false" text="thrd" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <Button fx:id="btn_finish" alignment="CENTER" contentDisplay="CENTER" layoutX="248.0" layoutY="525.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
+      <Button fx:id="btn_finish" alignment="CENTER" contentDisplay="CENTER" layoutX="359.0" layoutY="545.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" style="-fx-background-color: #66cc68;" text="Завершити" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_time" alignment="CENTER" contentDisplay="CENTER" layoutX="388.0" layoutY="14.0" prefHeight="30.0" prefWidth="206.0" textFill="WHITE">
+      <Label fx:id="label_time" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="61.0" prefHeight="30.0" prefWidth="206.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
-      <Label fx:id="error_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="97.0" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="error_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="613.0" layoutY="17.0" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btn_login" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="123.0" style="-fx-background-color: #66cc68;" text="Головне меню" textFill="WHITE">
+      <Button fx:id="btn_login" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="123.0" style="-fx-background-color: #66cc68;" text="Головне меню" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font>
       </Button>
-      <ImageView fx:id="image_view" fitHeight="145.0" fitWidth="490.0" layoutX="59.0" layoutY="175.0" />
+      <ImageView fx:id="image_view" fitHeight="227.0" fitWidth="476.0" layoutX="63.0" layoutY="209.0" />
    </children>
 </AnchorPane>
