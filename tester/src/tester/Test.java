@@ -1,6 +1,5 @@
 package tester;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -10,8 +9,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-import javax.swing.event.TreeModelEvent;
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
