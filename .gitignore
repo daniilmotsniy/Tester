@@ -3,3 +3,4 @@ tester/src/test/Test.java
 tester/.idea/misc.xml
 tester/.idea/libraries/javafx_swt.xml
 tester/tester_java.iml
+*.class
