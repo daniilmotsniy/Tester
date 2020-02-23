@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 import javax.swing.event.TreeModelEvent;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -173,10 +174,8 @@ public class Test {
         }
 
         try {
-            BufferedImage image = questionsReader.getPicture(questionIndex);
-
-            image_view.setImage(image == null ? null : SwingFXUtils.toFXImage(image, null));
-        } catch (IOException e) {
+            image_view.setImage(questionsReader.getPicture(questionIndex));
+        } catch (FileNotFoundException e) {
             showExceptionAndExit("Помилка читання зображення", e);
         }
     }

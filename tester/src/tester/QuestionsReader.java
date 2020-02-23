@@ -1,45 +1,44 @@
 package tester;
 
-import javafx.util.Pair;
+import javafx.scene.image.Image;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class QuestionsReader {
     private static final byte SALT = -66;
 
     // tokens must be lower case in the code, but they can be any in files
     private static final String TOKEN_QUESTION = "q";
-    private static final String TOKEN_VARIANT = "a";
+    private static final String TOKEN_CHOICE = "a";
     private static final String TOKEN_PICTURE = "p";
 
-    private static final List<String> TOKENS = Arrays.asList(TOKEN_QUESTION, TOKEN_VARIANT, TOKEN_PICTURE);
+    private static final List<String> TOKENS = Arrays.asList(TOKEN_QUESTION, TOKEN_CHOICE, TOKEN_PICTURE);
 
     private String[] lines;
     private byte[] answers;
 
     private int questionSize;
 
-    private HashMap<Integer, File> pictures;
+    private List<File> pictures;
 
-    public QuestionsReader(String path, int variantsCount) throws IOException {
-        this(path, variantsCount, true);
+    public QuestionsReader(String path, int choicesCount) throws IOException {
+        this(path, choicesCount, true);
     }
 
-    public QuestionsReader(String path, int variantsCount, boolean encryptFile) throws IOException {
-        List<String> list = readFile(path, variantsCount);
+    public QuestionsReader(String path, int choicesCount, boolean encryptFile) throws IOException {
+        List<String> list = readFile(path, choicesCount);
 
-        questionSize = 1 + variantsCount;
+        questionSize = 1 + choicesCount;
 
         lines = list.toArray(new String[0]);
 
         if (answers == null) {
             answers = new byte[getQuestionsCount()];
 
-            shuffleAnswers(variantsCount);
+            shuffleAnswers(choicesCount);
 
             if (encryptFile) {
                 this.encryptFile(path);
@@ -59,7 +58,7 @@ public class QuestionsReader {
         return result;
     }
 
-    public String[] getVariants(int questionIndex) {
+    public String[] getVariants(int questionIndex) { // TODO rename
         String[] variants = new String[questionSize - 1];
         for (int i = 0; i < questionSize - 1; ++i) {
             variants[i] = lines[questionIndex * questionSize + i + 1];
@@ -72,24 +71,29 @@ public class QuestionsReader {
         return answers[questionIndex];
     }
 
-    public BufferedImage getPicture(int questionIndex) throws IOException {
-        File file = pictures == null ? null : pictures.getOrDefault(questionIndex, null);
+    public Image getPicture(int questionIndex) throws FileNotFoundException { // TODO maybe read picture once
+        File file = pictures == null ? null : (pictures.size() > questionIndex ? pictures.get(questionIndex) : null);
 
-        return file == null ? null : ImageIO.read(file);
+        if (file == null)
+            return null;
+
+        if (!file.exists())
+            throw new FileNotFoundException(String.format("Image %s not found", file.getPath()));
+
+        return new Image(file.toURI().toString());
     }
 
     public void encryptFile(String path) throws IOException {
-        String key = toEncryptedString(answers);
+        String key = Encryption.toEncryptedString(answers, SALT);
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(path));
 
         bw.append(key).write('\n');
 
         for (int i = 0; i < lines.length; ++i) {
-            bw.append((i & 3) == 0 ? TOKEN_QUESTION : TOKEN_VARIANT).append('\n').append(lines[i]).write('\n');
-            File picture = pictures == null ? null : pictures.getOrDefault(i / questionSize, null);
-            if ((i & 3) == 3 && picture != null) {
-                bw.append(TOKEN_PICTURE).append('\n').append(picture.getPath()).write('\n');
+            bw.append((i & 3) == 0 ? TOKEN_QUESTION : TOKEN_CHOICE).append('\n').append(lines[i]).write('\n');
+            if ((i & 3) == 3 && pictures != null && pictures.size() > i / questionSize) {
+                bw.append(TOKEN_PICTURE).append('\n').append(pictures.get(i / questionSize).getPath()).write('\n');
             }
         }
 
@@ -111,12 +115,11 @@ public class QuestionsReader {
             bw.append(TOKEN_QUESTION).append('\n').append(lines[j]).write('\n');
 
             for (int k = 1; k < questionSize; ++k) {
-                bw.append(TOKEN_VARIANT).append('\n').append(lines[j + k]).write('\n');
+                bw.append(TOKEN_CHOICE).append('\n').append(lines[j + k]).write('\n');
             }
 
-            File picture = pictures == null ? null : pictures.getOrDefault(i, null);
-            if (picture != null) {
-                bw.append(TOKEN_PICTURE).append('\n').append(picture.getPath()).write('\n');
+            if (pictures != null && pictures.size() > i) {
+                bw.append(TOKEN_PICTURE).append('\n').append(pictures.get(i).getPath()).write('\n');
             }
         }
 
@@ -128,107 +131,141 @@ public class QuestionsReader {
         }
     }
 
-    private List<String> readFile(String path, int variantsCount) throws IOException { // TODO improve checking
-        List<String> result = new ArrayList<>(32);
+    private List<String> readFile(String path, int choicesCount) throws IOException {
+        List<String> result;
+        String key = null;
 
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        String line, key = null;
-        int lineIndex = 1;
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String token;
+            AtomicInteger lineIndex = new AtomicInteger(1);
 
-        for (; (line = br.readLine()) != null; ++lineIndex) {
-            line = line.trim();
+            for (; (token = br.readLine()) != null; lineIndex.getAndIncrement()) {
+                token = token.trim();
 
-            if (line.length() == 0) // skip blanks
-                continue;
+                if (token.length() == 0) // skip blanks
+                    continue;
 
-            if (line.matches("^[0-9]+$")) { // find key
-                key = line;
+                if (token.matches("^[0-9]+$")) { // find key
+                    key = token;
 
-                line = br.readLine();
+                    lineIndex.getAndIncrement();
+                    token = br.readLine();
+                }
+
+                if (token.equalsIgnoreCase(TOKEN_QUESTION)) // find first token
+                    break;
+
+                br.close();
+                throw new IOException(String.format("Unexpected line at %s: %s", lineIndex.toString(), token));
             }
 
-            if (line.equalsIgnoreCase(TOKEN_QUESTION)) // find first token
-                break;
+            result = new ArrayList<>(32);
+            String previousToken = null;
+            int sameTokensInARow = 0, previousTokensInARow = -1, questionIndex = -1;
 
-            br.close();
-            throw new IOException(String.format("Unexpected line at %d: %s", lineIndex, line));
+            do {
+                if (token.equals(previousToken)) {
+                    ++sameTokensInARow;
+                } else {
+                    previousTokensInARow = sameTokensInARow;
+                    sameTokensInARow = 1;
+                }
+
+                String[] linesAndToken = readToken(br, lineIndex);
+
+                switch (token) {
+                    case TOKEN_QUESTION:
+                        if (previousToken != null) {
+                            switch (previousToken) {
+                                case TOKEN_QUESTION:
+                                    throw new IOException(String.format("Question must have choices, line: %s", lineIndex.toString()));
+                                case TOKEN_CHOICE:
+                                    if (previousTokensInARow != choicesCount) {
+                                        throw new IOException(String.format("Wrong choices count, line: %s", lineIndex.toString()));
+                                    }
+                                    break;
+                            }
+                        }
+                        ++questionIndex;
+                    case TOKEN_CHOICE:
+                        result.add(linesAndToken[0]);
+                        break;
+                    case TOKEN_PICTURE:
+                        if (previousToken.equals(TOKEN_CHOICE) && previousTokensInARow != choicesCount) {
+                            throw new IOException(String.format("Wrong choices count, line: %s", lineIndex.toString()));
+                        }
+                        setPicture(linesAndToken[0], questionIndex, lineIndex.get() - 1);
+                        break;
+                }
+
+                previousToken = token;
+                token = linesAndToken[1];
+            } while (token != null);
         }
 
-        String previousToken = TOKEN_QUESTION, lastToken = null;
-        int sameTokensInARow = 1;
-        int questionIndex = 0;
-
-        do {
-            for (int j = 0; j < 1 + variantsCount; ++j) {
-                Pair<Integer, Pair<String, String>> pair = readLinesUntilNextBreakToken(br, lineIndex);
-                lineIndex = pair.getKey();
-                lastToken = pair.getValue().getKey();
-                line = pair.getValue().getValue();
-
-                if (previousToken.equals(TOKEN_PICTURE)) {
-                    if (pictures == null)
-                        pictures = new HashMap<>(4);
-
-                    File file = new File(line);
-
-                    if (!file.exists()) {
-                        br.close();
-                        throw new FileNotFoundException(String.format("Image %s not found", line));
-                    }
-
-                    pictures.put(questionIndex, file);
-                } else {
-                    result.add(line);
-                }
-
-                if (lastToken != null) {
-                    if (lastToken.equals(TOKEN_PICTURE))
-                        --j;
-
-                    if (lastToken.equals(previousToken)) {
-                        ++sameTokensInARow;
-
-                        if (lastToken.equals(TOKEN_VARIANT) && sameTokensInARow > variantsCount
-                                || (lastToken.equals(TOKEN_QUESTION) || lastToken.equals(TOKEN_PICTURE)) && sameTokensInARow > 1) {
-                            br.close();
-                            throw new IOException(String.format("Unexpected token at %d: %s", lineIndex, lastToken));
-                        }
-                    } else {
-                        sameTokensInARow = 1;
-                        previousToken = lastToken;
-                    }
-                }
-            }
-            ++questionIndex;
-        } while (lastToken != null);
-
-        br.close();
-
-//        if (!Objects.equals(previousToken, 'a') || sameTokensInARow != variantsCount) { // TODO
-//            throw new IOException("Wrong questions count");
-//        }
-
-        if (key != null)
-            answers = toDecryptedArray(key, result.size() / (1 + variantsCount));
-
+        if (key != null) {
+            answers = Encryption.toDecryptedArray(key, result.size() / (1 + choicesCount), SALT);
+        }
         return result;
     }
 
-    private void shuffleAnswers(int variantsCount) throws IOException {
+    private void setPicture(String path, int questionIndex, int lineIndex) throws IOException {
+        if (pictures == null) {
+            pictures = new ArrayList<>(Math.min(4, questionIndex + 1)); // TODO maybe do not reserve capacity for unread questions
+
+            for (int i = 0; i < questionIndex; ++i) {
+                pictures.add(null);
+            }
+        }
+
+        if (pictures.size() < questionIndex) {
+            for (int i = pictures.size(); i < questionIndex; ++i) {
+                pictures.add(null);
+            }
+        }
+
+        if (pictures.size() == questionIndex) {
+            File file = new File(path);
+
+            if (!file.exists()) {
+                throw new FileNotFoundException(String.format("Image %s not found, line: %d", path, lineIndex));
+            }
+
+            pictures.add(new File(path));
+        } else {
+            throw new IOException(String.format("Question cannot have multiple pictures, line: %d", lineIndex));
+        }
+    }
+
+    private static String[] readToken(BufferedReader br, AtomicInteger lineIndex) throws IOException {
+        StringBuilder result = new StringBuilder();
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            lineIndex.getAndIncrement();
+            if (TOKENS.contains(line.toLowerCase())) // TODO add "line.length() == N" if all tokens have the same size
+                break;
+            result.append(line).append('\n');
+        }
+
+        return new String[]{result.toString().trim(), line == null ? null : line.toLowerCase()};
+    }
+
+    private void shuffleAnswers(int choicesCount) throws IOException {
         Random rnd = new Random();
 
         for (int i = 0; i < getQuestionsCount(); ++i) {
             Set<String> set = new HashSet<>();
 
-            for (int j = 0; j < variantsCount; ++j) {
+            for (int j = 0; j < choicesCount; ++j) {
                 if (!set.add(lines[i * questionSize + j + 1])) {
-                    throw new IOException("Duplicated variants");
+                    throw new IOException("Duplicated choices");
                 }
             }
 
             int answer = answers[i];
 
-            for (int j = variantsCount - 1; j > 0; --j) {
+            for (int j = choicesCount - 1; j > 0; --j) {
                 int r = rnd.nextInt(j + 1);
                 String tmp = lines[i * questionSize + r + 1];
                 lines[i * questionSize + r + 1] = lines[i * questionSize + j + 1];
@@ -241,89 +278,13 @@ public class QuestionsReader {
 
             answers[i] = (byte) answer;
 
-            for (int j = 0; j < variantsCount; ++j) {
+            for (int j = 0; j < choicesCount; ++j) {
                 lines[i * questionSize + j + 1] = lines[i * questionSize + j + 1];
             }
         }
     }
 
-    // Pair<lineIndex, Pair<token, data>>
-    private Pair<Integer, Pair<String, String>> readLinesUntilNextBreakToken(BufferedReader br, int lineIndex) throws IOException {
-        StringBuilder builder = new StringBuilder();
-        String line;
 
-        while ((line = br.readLine()) != null) {
-            if (TOKENS.contains(line.toLowerCase())) { // TODO add "line.length() == N" if all tokens have the same size
-                break;
-            }
-            builder.append(line).append('\n');
-            ++lineIndex;
-        }
-
-        return new Pair<>(lineIndex, new Pair<>(line == null ? null : line.toLowerCase(), builder.toString().trim()));
-    }
-
-    private static String toEncryptedString(byte[] data) {
-        byte[] encrypted = encrypt(data);
-
-        StringBuilder builder = new StringBuilder();
-
-        for (byte b : encrypted) {
-            builder.append(b);
-        }
-
-        return builder.toString();
-    }
-
-    private static byte[] toDecryptedArray(String str, int count) {
-        byte[] result = new byte[count];
-
-        for (int i = 0; i < count; ++i) {
-            result[i] = (byte) (str.charAt(i) - '0');
-        }
-
-        return decrypt(result, count);
-    }
-
-    private static byte[] encrypt(byte[] in) {
-        byte[] en1 = encode(in);
-
-        xorAll(en1);
-
-        return decode(en1, in.length);
-    }
-
-    private static byte[] decrypt(byte[] data, int count) {
-        return decode(xorAll(encode(data)), count);
-    }
-
-    private static byte[] encode(byte[] data) {
-        byte[] result = new byte[(data.length - 1) / 4 + 1];
-
-        for (int i = 0; i < data.length; ++i) {
-            result[i / 4] |= (byte) (data[i] << ((3 - (i & 0b11)) * 2));
-        }
-
-        return result;
-    }
-
-    private static byte[] decode(byte[] bytes, int count) {
-        byte[] result = new byte[count];
-
-        for (int i = 0; i < count; ++i) {
-            result[i] = (byte) ((bytes[i / 4] >>> ((3 - (i & 0b11)) * 2)) & 0b11);
-        }
-
-        return result;
-    }
-
-    private static byte[] xorAll(byte[] data) {
-        for (int i = 0; i < data.length; ++i) {
-            data[i] ^= SALT;
-        }
-
-        return data;
-    }
 
     @Override
     public String toString() {
