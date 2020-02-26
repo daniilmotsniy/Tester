@@ -80,7 +80,7 @@ public class Login {
                     String name_str = txt_field_name.getText();
                     String group_str = cmb_group.getSelectionModel().getSelectedItem();
                     String current_time = myDateObj.format(myFormatObj);
-                    writer.append(name_str).append('\t').append(group_str).append('\t').append(current_time).write('\n');
+                    writer.append(name_str).append('n').append('\t').append(group_str).append('\t').append(current_time);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

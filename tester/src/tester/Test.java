@@ -49,7 +49,6 @@ public class Test {
 
     private RadioButton[] answ_rbs;
 
-
     // Date format
     LocalDateTime myDateObj = LocalDateTime.now();
     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -63,6 +62,7 @@ public class Test {
 
     @FXML
     void initialize() {
+
         // Timer
         Timer start_time = new Timer();
         start_time.setLabel_time(label_time);
@@ -94,18 +94,21 @@ public class Test {
             //Adding answer
             addAnswer(answers);
 
-            String result = "Результат: " + result(answers);
+            String result = String.valueOf(result(answers));
             label_question.setText(result);
             label_question1.setText("Тест пройдено");
 
-            //Add finish time + result in txt file
+            //add finish time + result in txt file
             try (FileWriter writer = new FileWriter("res/students.txt", true)) { // get name
                 String current_time = myDateObj.format(myFormatObj);
-                writer.append('\t').append(current_time).append('\t').append(result).write('\n');
-
+                writer.append('\t').append(current_time).append('\t').append('r').append(result).write('\n');
             } catch (IOException e) {
                 showExceptionAndExit("Помилка запису у файл", e);
             }
+
+            Statistics s = new Statistics("res/students.txt");
+            //Dm конструктор или setter?
+            s.getBuff();
 
             btn_next.setDisable(true);
             btn_prev.setDisable(true);
@@ -113,6 +116,7 @@ public class Test {
             for (RadioButton button : answ_rbs) {
                 button.setVisible(false);
             }
+
         });
 
         //Next btn
