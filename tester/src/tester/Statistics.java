@@ -31,20 +31,29 @@ public class Statistics {
             BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
 
             String line;
-            String current_name = null;
-            String current_result_str = null;
-            int current_result_int = 0;
+            String current_name;
+            String current_result_str;
+            int current_result_int;
 
-            int index_name = 0;
-            int index_result = 0;
+            int index_name;
+            int index_result;
+
+            boolean flag = false;
+            boolean scaned = false;
 
             while((line = bufferedReader.readLine()) != null) {
-                index_name = line.indexOf('n');
+                for(int i = line.length() - 1; i >= 0; --i){
+                    if(line.charAt(i) < '0' || line.charAt(i) > 9){
+                        flag = line.charAt(i) == 'r';
+                        break;
+                    }
+                }
+                index_name = line.lastIndexOf('n');
                 index_result = line.indexOf('r');
 
                 current_name = line.substring(0, index_name);
 
-                current_result_str += line.substring(index_result);
+                current_result_str = line.substring(index_result+1);
                 current_result_int = Integer.parseInt(current_result_str);
                 
                 if(users.get(current_name) == null){
@@ -55,7 +64,7 @@ public class Statistics {
                     users.get(current_name).add(current_result_int);
                 }
 
-                current_name = null;
+//                current_name = null;
             }
 
 
@@ -65,7 +74,7 @@ public class Statistics {
             e.printStackTrace();
         }
 
-        printUsers(users); //dm delete it!
+        printUsers(users); //dm print
     }
 
 }
