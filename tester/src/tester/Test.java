@@ -49,6 +49,7 @@ public class Test {
 
     private RadioButton[] answ_rbs;
 
+    private int answerChangedTimes = 0;
 
     // Date format
     LocalDateTime myDateObj = LocalDateTime.now();
@@ -150,6 +151,16 @@ public class Test {
                 e.printStackTrace();
             }
         });
+
+        for (RadioButton answ_rb : answ_rbs) {
+            answ_rb.setOnAction(event -> {
+                ++answerChangedTimes;
+
+                if (answerChangedTimes == 42) {
+                    label_time.setText("The answer is 42");
+                }
+            });
+        }
     }
 
     private void questionChanged(int[] answers) {
