@@ -152,6 +152,8 @@ public class QuestionsReader {
                     token = br.readLine();
                 }
 
+                token = token.toLowerCase();
+
                 if (token.equalsIgnoreCase(TOKEN_QUESTION)) // find first token
                     break;
 

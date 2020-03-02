@@ -17,6 +17,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class Test {
+    private static final int VARIANTS_COUNT = 1;
+
     int questionIndex = 0; //Number of block with questions and answers
     // block is the part of text that has 1 question and N (3) answers
 
@@ -61,6 +63,7 @@ public class Test {
     String path = Login.selectedTest;
 
     private QuestionsReader questionsReader;
+    private VariantsShuffler variantsShuffler;
 
     @FXML
     void initialize() {
@@ -79,13 +82,13 @@ public class Test {
 
         //Main methods
         try {
-            questionsReader = new QuestionsReader(path, 3);
+            questionsReader = new QuestionsReader(path, 3, false);
         } catch (IOException e) {
             showExceptionAndExit("Помилка при читанні з файлу", e);
         }
-
+        variantsShuffler = new VariantsShuffler(questionsReader.getQuestionsCount() / VARIANTS_COUNT, VARIANTS_COUNT);
         //It keeps answers from user
-        int[] answers = new int[questionsReader.getQuestionsCount()];
+        int[] answers = new int[questionsReader.getQuestionsCount() / VARIANTS_COUNT];
         Arrays.fill(answers, -1);
         //Set inf-n on the page
         setInformation();
@@ -123,8 +126,8 @@ public class Test {
 
         //Next btn
         btn_next.setOnAction(event -> {
-            if (questionIndex > questionsReader.getQuestionsCount() - 1) {
-                questionIndex = questionsReader.getQuestionsCount() - 1;
+            if (questionIndex > questionsReader.getQuestionsCount() / VARIANTS_COUNT - 1) {
+                questionIndex = questionsReader.getQuestionsCount() / VARIANTS_COUNT - 1;
             } else {
                 addAnswer(answers);
                 questionIndex++;
@@ -170,7 +173,7 @@ public class Test {
 
     private void questionChanged(int[] answers) {
         btn_prev.setDisable(questionIndex == 0);
-        btn_next.setDisable(questionIndex == 2);
+        btn_next.setDisable(questionIndex == questionsReader.getQuestionsCount() / VARIANTS_COUNT - 1);
 
         int option = answers[questionIndex];
 
@@ -180,14 +183,18 @@ public class Test {
     }
 
     void setInformation() {
-        label_question.setText(questionsReader.getQuestions()[questionIndex]);
-        String[] variants = questionsReader.getVariants(questionIndex);
+        int questionIndexGlobal = questionIndex + questionsReader.getQuestionsCount() / VARIANTS_COUNT * variantsShuffler.getVariant(questionIndex);
+
+        System.out.println(questionIndexGlobal);
+
+        label_question.setText(questionsReader.getQuestions()[questionIndexGlobal]);
+        String[] variants = questionsReader.getVariants(questionIndexGlobal);
         for (int i = 0; i < answ_rbs.length; ++i) {
             answ_rbs[i].setText(variants[i]);
         }
 
         try {
-            image_view.setImage(questionsReader.getPicture(questionIndex));
+            image_view.setImage(questionsReader.getPicture(questionIndexGlobal));
         } catch (FileNotFoundException e) {
             showExceptionAndExit("Помилка читання зображення", e);
         }
