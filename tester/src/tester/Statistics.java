@@ -18,19 +18,14 @@ public class Statistics {
         this.path = path;
     }
 
-    void printUsers(HashMap<String, List<Integer>> users){
-        users.entrySet().forEach(entry->{
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        });
-    }
-
-    void getBuff(){
+    void getData(){
         try {
             File file = new File(path);
-            FileReader fileReader = new FileReader(file); // поток, который подключается к текстовому файлу
-            BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
+            FileReader fileReader = new FileReader(file); // thread connected to file
+            BufferedReader bufferedReader = new BufferedReader(fileReader); // connecting FileReader and BufferedReader
 
-            String line;
+            String line; // line in file with student's information
+
             String current_name;
             String current_result_str;
             int current_result_int;
@@ -43,7 +38,7 @@ public class Statistics {
 
             while((line = bufferedReader.readLine()) != null) {
                 for(int i = line.length() - 1; i >= 0; --i){
-                    if(line.charAt(i) < '0' || line.charAt(i) > 9){
+                    if(line.charAt(i) < '0' || line.charAt(i) > '9'){
                         flag = line.charAt(i) == 'r';
                         break;
                     }
@@ -64,17 +59,33 @@ public class Statistics {
                     users.get(current_name).add(current_result_int);
                 }
 
-//                current_name = null;
             }
 
-
-            bufferedReader.close(); // закрываем поток
+            bufferedReader.close(); // close thread
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        printUsers(users); //dm print
+        printUsers(users); // print hash map
+
+        System.out.println();
+    }
+
+    void printUsers(HashMap<String, List<Integer>> users){
+        users.entrySet().forEach(entry->{
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        });
+    }
+
+    int findMax(HashMap<String, List<Integer>> users){
+        int res = 0;
+
+        for (int i = 0; i < users.size(); i++) {
+
+        }
+
+        return res;
     }
 
 }

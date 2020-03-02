@@ -83,6 +83,7 @@ public class Test {
         } catch (IOException e) {
             showExceptionAndExit("Помилка при читанні з файлу", e);
         }
+
         //It keeps answers from user
         int[] answers = new int[questionsReader.getQuestionsCount()];
         Arrays.fill(answers, -1);
@@ -110,7 +111,7 @@ public class Test {
 
             Statistics s = new Statistics("res/students.txt");
             //Dm конструктор или setter?
-            s.getBuff();
+            s.getData();
 
             btn_next.setDisable(true);
             btn_prev.setDisable(true);
