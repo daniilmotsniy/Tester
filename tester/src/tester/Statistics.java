@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public class Statistics {
 
     private String path;

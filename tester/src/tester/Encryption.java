@@ -1,5 +1,11 @@
 package tester;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public final class Encryption {
     private Encryption() {}
 

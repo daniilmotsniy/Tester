@@ -16,6 +16,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public class Test {
     private static final int VARIANTS_COUNT = 1;
 

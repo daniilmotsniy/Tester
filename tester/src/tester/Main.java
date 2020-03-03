@@ -7,6 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public class Main extends Application {
 
     //Main page with some settings

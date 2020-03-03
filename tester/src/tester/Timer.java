@@ -3,6 +3,12 @@ package tester;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public class Timer {
     //Time measure
     public int seconds = 0;

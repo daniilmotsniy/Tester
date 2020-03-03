@@ -2,6 +2,12 @@ package tester;
 
 import java.util.Random;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public class VariantsShuffler {
     private int[] variants;
 

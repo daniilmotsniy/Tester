@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ *  Tester
+ *
+ *  Author DMotsniy & Mirniy18
+ */
+
 public class Login {
 
     ObservableList<String> langs_group = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12");
