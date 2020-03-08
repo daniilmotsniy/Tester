@@ -73,6 +73,8 @@ public class Test {
 
     @FXML
     void initialize() {
+
+        Main.printError("HW!");
         // Timer
         Timer start_time = new Timer();
         start_time.setLabel_time(label_time);
@@ -215,6 +217,7 @@ public class Test {
                     selected = i;
                 } else {
                     System.err.println("WTF several RadioButtons selected"); // TODO maybe remove
+                    Main.printError("WTF several RadioButtons selected");
                 }
             }
         }

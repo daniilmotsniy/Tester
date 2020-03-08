@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -14,6 +15,14 @@ import javafx.stage.Stage;
  */
 
 public class Main extends Application {
+
+    static void printError(String error_text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(error_text);
+        alert.showAndWait();
+    }
 
     //Main page with some settings
     Image icon = new Image(getClass().getResourceAsStream("icon/icon.png"));
@@ -30,5 +39,6 @@ public class Main extends Application {
 
     public static void main(String[] args) throws  Exception{ launch(args); }
 }
+
 
 

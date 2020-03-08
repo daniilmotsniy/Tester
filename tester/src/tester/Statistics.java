@@ -85,14 +85,17 @@ public class Statistics {
         });
     }
 
-    int findMax(HashMap<String, List<Integer>> users){
-        int res = 0;
-
-        for (int i = 0; i < users.size(); i++) {
-
-        }
-
-        return res;
-    }
+//    int findMax(HashMap<String, List<Integer>> users){
+//        int max = 0, i = 0;
+//
+//        users.entrySet().forEach(entry->{
+//            if(entry.getValue().get(i) > max){
+//                max = entry.getValue().get(i);
+//                i++;
+//            }
+//        });
+//
+//        return max;
+//    }
 
 }
