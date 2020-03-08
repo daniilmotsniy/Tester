@@ -34,10 +34,12 @@ public class Statistics {
 
             String current_name;
             String current_result_str;
+            String current_group;
             int current_result_int;
 
             int index_name;
             int index_result;
+            int index_group;
 
             boolean flag = false;
             boolean scaned = false;
@@ -51,9 +53,10 @@ public class Statistics {
                 }
                 index_name = line.lastIndexOf('n');
                 index_result = line.indexOf('r');
+                index_group =  line.lastIndexOf('g');
 
                 current_name = line.substring(0, index_name);
-
+                current_group = line.substring(index_name, index_group);
                 current_result_str = line.substring(index_result+1);
                 current_result_int = Integer.parseInt(current_result_str);
                 
@@ -74,8 +77,6 @@ public class Statistics {
         }
 
         printUsers(users); // print hash map
-
-        System.out.println();
     }
 
     void printUsers(HashMap<String, List<Integer>> users){

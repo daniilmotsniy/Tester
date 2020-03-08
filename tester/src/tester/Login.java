@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class Login {
 
-    ObservableList<String> langs_group = FXCollections.observableArrayList("КС-12", "КС-12", "КС-12", "КС-12");
+    ObservableList<String> langs_group = FXCollections.observableArrayList("КС-11", "КС-12", "КС-13", "КС-14");
     List<File> langs_test = new ArrayList<>();
 
     LocalDateTime myDateObj = LocalDateTime.now();
@@ -86,7 +86,7 @@ public class Login {
                     String name_str = txt_field_name.getText();
                     String group_str = cmb_group.getSelectionModel().getSelectedItem();
                     String current_time = myDateObj.format(myFormatObj);
-                    writer.append(name_str.trim()).append('n').append('\t').append(group_str).append('\t').append(current_time);
+                    writer.append(name_str.trim()).append('n').append('\t').append(group_str).append('g').append('\t').append(current_time);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
