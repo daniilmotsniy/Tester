@@ -23,8 +23,6 @@ import java.util.Arrays;
  */
 
 public class Test {
-    private static final int VARIANTS_COUNT = 1;
-
     int questionIndex = 0; //Number of block with questions and answers
     // block is the part of text that has 1 question and N (3) answers
 
@@ -60,21 +58,21 @@ public class Test {
     private int answerChangedTimes = 0;
 
     // Date format
-    LocalDateTime myDateObj = LocalDateTime.now();
-    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private LocalDateTime myDateObj = LocalDateTime.now();
+    private DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    ToggleGroup answers_tgl = new ToggleGroup();
+    private ToggleGroup answers_tgl = new ToggleGroup();
 
     //Path to txt file
-    String path = Login.selectedTest;
+    private String path = Login.selectedTest;
 
-    private QuestionsReader questionsReader;
+    private FileHandler questionsReader;
     private VariantsShuffler variantsShuffler;
+
+    private static int variantsCount;
 
     @FXML
     void initialize() {
-
-        Main.printError("HW!");
         // Timer
         Timer start_time = new Timer();
         start_time.setLabel_time(label_time);
@@ -90,13 +88,20 @@ public class Test {
 
         //Main methods
         try {
-            questionsReader = new QuestionsReader(path, 3, false);
-        } catch (IOException e) {
+            questionsReader = new FileHandler(path, 3, false);
+        } catch (Exception e) {
             showExceptionAndExit("Помилка при читанні з файлу", e);
         }
-        variantsShuffler = new VariantsShuffler(questionsReader.getQuestionsCount() / VARIANTS_COUNT, VARIANTS_COUNT);
+        try {
+            String value = questionsReader.getSetting("variants");
+
+            variantsCount = value == null ? 1 : Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            showExceptionAndExit("Помилка при читанні параметрів", e);
+        }
+        variantsShuffler = new VariantsShuffler(questionsReader.getQuestionsCount() / variantsCount, variantsCount);
         //It keeps answers from user
-        int[] answers = new int[questionsReader.getQuestionsCount() / VARIANTS_COUNT];
+        int[] answers = new int[questionsReader.getQuestionsCount() / variantsCount];
         Arrays.fill(answers, -1);
         //Set inf-n on the page
         setInformation();
@@ -134,8 +139,8 @@ public class Test {
 
         //Next btn
         btn_next.setOnAction(event -> {
-            if (questionIndex > questionsReader.getQuestionsCount() / VARIANTS_COUNT - 1) {
-                questionIndex = questionsReader.getQuestionsCount() / VARIANTS_COUNT - 1;
+            if (questionIndex > questionsReader.getQuestionsCount() / variantsCount - 1) {
+                questionIndex = questionsReader.getQuestionsCount() / variantsCount - 1;
             } else {
                 addAnswer(answers);
                 questionIndex++;
@@ -181,7 +186,7 @@ public class Test {
 
     private void questionChanged(int[] answers) {
         btn_prev.setDisable(questionIndex == 0);
-        btn_next.setDisable(questionIndex == questionsReader.getQuestionsCount() / VARIANTS_COUNT - 1);
+        btn_next.setDisable(questionIndex == questionsReader.getQuestionsCount() / variantsCount - 1);
 
         int option = answers[questionIndex];
 
@@ -191,12 +196,12 @@ public class Test {
     }
 
     void setInformation() {
-        int questionIndexGlobal = questionIndex + questionsReader.getQuestionsCount() / VARIANTS_COUNT * variantsShuffler.getVariant(questionIndex);
+        int questionIndexGlobal = questionIndex + questionsReader.getQuestionsCount() / variantsCount * variantsShuffler.getVariant(questionIndex);
 
         System.out.println(questionIndexGlobal);
 
         label_question.setText(questionsReader.getQuestions()[questionIndexGlobal]);
-        String[] variants = questionsReader.getVariants(questionIndexGlobal);
+        String[] variants = questionsReader.getChoices(questionIndexGlobal);
         for (int i = 0; i < answ_rbs.length; ++i) {
             answ_rbs[i].setText(variants[i]);
         }
@@ -209,24 +214,13 @@ public class Test {
     }
 
     void addAnswer(int[] answers) {
-        int selected = -1;
-
         for (int i = 0; i < answ_rbs.length; ++i) {
             if (answ_rbs[i].isSelected()) {
-                if (selected == -1) {
-                    selected = i;
-                } else {
-                    System.err.println("WTF several RadioButtons selected"); // TODO maybe remove
-                    Main.printError("WTF several RadioButtons selected");
-                }
+                answers[questionIndex] = i;
+
+                break;
             }
         }
-
-        if (selected == -1) {
-            return;
-        }
-
-        answers[questionIndex] = selected;
 
         System.out.println("Result: q - " + questionIndex + "/ a - " + answers[questionIndex]);
 
@@ -246,9 +240,9 @@ public class Test {
         return result;
     }
 
-    private void showExceptionAndExit(String message, Exception e) { // TODO add message to GUI
+    private void showExceptionAndExit(String message, Exception e) {
         System.err.println(message + '\n' + e.getLocalizedMessage());
-        error_lbl.setText(message + '\n' + e.getLocalizedMessage());
-        System.exit(-1);
+        Main.printError(message + '\n' + e.getLocalizedMessage());
+        System.exit(-1); // TODO return to Login
     }
 }
