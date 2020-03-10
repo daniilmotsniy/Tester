@@ -16,9 +16,7 @@ import java.util.List;
 public class Statistics {
 
     private String path;
-    HashMap<String, List<Integer>> users = new HashMap<>();
-
-    private int best_result = 0;
+    HashMap<String, List<String>> users = new HashMap<>();
 
     Statistics(String path){
         this.path = path;
@@ -42,15 +40,9 @@ public class Statistics {
             int index_group;
 
             boolean flag = false;
-            boolean scaned = false;
 
             while((line = bufferedReader.readLine()) != null) {
-                for(int i = line.length() - 1; i >= 0; --i){
-                    if(line.charAt(i) < '0' || line.charAt(i) > '9'){
-                        flag = line.charAt(i) == 'r';
-                        break;
-                    }
-                }
+
                 index_name = line.lastIndexOf('n');
                 index_result = line.indexOf('r');
                 index_group =  line.lastIndexOf('g');
@@ -65,7 +57,7 @@ public class Statistics {
                 }
 
                 if (current_name!=null) {
-                    users.get(current_name).add(current_result_int);
+                    users.get(current_name).add(String.valueOf(current_result_int));
                 }
 
             }
@@ -79,23 +71,11 @@ public class Statistics {
         printUsers(users); // print hash map
     }
 
-    void printUsers(HashMap<String, List<Integer>> users){
+    void printUsers(HashMap<String, List<String>> users){
         users.entrySet().forEach(entry->{
             System.out.println(entry.getKey() + " " + entry.getValue());
         });
     }
 
-//    int findMax(HashMap<String, List<Integer>> users){
-//        int max = 0, i = 0;
-//
-//        users.entrySet().forEach(entry->{
-//            if(entry.getValue().get(i) > max){
-//                max = entry.getValue().get(i);
-//                i++;
-//            }
-//        });
-//
-//        return max;
-//    }
 
 }

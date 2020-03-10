@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
+<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
       <Label fx:id="label_question" alignment="CENTER" layoutX="16.0" layoutY="109.0" prefHeight="368.0" prefWidth="573.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="LEFT" textFill="WHITE">
          <font>
@@ -46,11 +46,6 @@
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
-      <Label fx:id="error_lbl" alignment="CENTER" contentDisplay="CENTER" layoutX="613.0" layoutY="17.0" prefHeight="30.0" prefWidth="164.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Calibri Light" size="14.0" />
-         </font>
-      </Label>
       <Button fx:id="btn_login" alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="123.0" style="-fx-background-color: #66cc68;" text="Головне меню" textFill="WHITE">
          <font>
             <Font name="Calibri Light" size="16.0" />

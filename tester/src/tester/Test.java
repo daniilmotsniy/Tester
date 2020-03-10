@@ -49,8 +49,6 @@ public class Test {
     @FXML
     private RadioButton answ_rb_2;
     @FXML
-    private Label error_lbl;
-    @FXML
     private ImageView image_view;
 
     private RadioButton[] answ_rbs;
@@ -70,6 +68,9 @@ public class Test {
     private VariantsShuffler variantsShuffler;
 
     private static int variantsCount;
+
+    private String test_mode = "Письмовий тест";
+    short q_count;
 
     @FXML
     void initialize() {
@@ -94,13 +95,13 @@ public class Test {
         }
         try {
             String value = questionsReader.getSetting("variants");
-
             variantsCount = value == null ? 1 : Integer.parseInt(value);
         } catch (NumberFormatException e) {
             showExceptionAndExit("Помилка при читанні параметрів", e);
         }
         variantsShuffler = new VariantsShuffler(questionsReader.getQuestionsCount() / variantsCount, variantsCount);
         //It keeps answers from user
+        q_count = (short) (questionsReader.getQuestionsCount() / variantsCount);
         int[] answers = new int[questionsReader.getQuestionsCount() / variantsCount];
         Arrays.fill(answers, -1);
         //Set inf-n on the page
@@ -112,22 +113,19 @@ public class Test {
             //Adding answer
             addAnswer(answers);
 
-            String result = String.valueOf(result(answers));
-            label_question.setText(result);
+            String mark = result(answers) * 100 / q_count  + "%";
+            label_question.setText(mark);
             label_question1.setText("Тест пройдено");
 
             //Add finish time + result in txt file
-            try (FileWriter writer = new FileWriter("res/students.txt", true)) { // get name
-                String current_time = myDateObj.format(myFormatObj);
-                writer.append('\t').append(current_time).append('\t').append('r').append(result).write('\n');
-
+            try (FileWriter writer = new FileWriter("res/students/" + Login.current_group + Login.current_name + ".txt")) { // get name
+                String finish_time = myDateObj.format(myFormatObj);
+                writer.write("Обраний тест: " + Login.current_test + "\nІм'я: "+ Login.current_name + '\t' + "Група: " + Login.current_group  + '\n' + "Початок тесту: " + Login.start_time + "\n" + "Кінець тесту: " + finish_time + "\n" + "Режим тесту: " + test_mode + "\n" + "Протокол тестування:\n");
+                writer.write(Arrays.toString(answers));
+                writer.write("\n" + "Всього питань: " + q_count + "\nРезультат: " + mark + "\n" + "");
             } catch (IOException e) {
                 showExceptionAndExit("Помилка запису у файл", e);
             }
-
-            Statistics s = new Statistics("res/students.txt");
-            //Dm конструктор или setter?
-            s.getData();
 
             btn_next.setDisable(true);
             btn_prev.setDisable(true);
@@ -217,12 +215,11 @@ public class Test {
         for (int i = 0; i < answ_rbs.length; ++i) {
             if (answ_rbs[i].isSelected()) {
                 answers[questionIndex] = i;
-
                 break;
             }
         }
 
-        System.out.println("Result: q - " + questionIndex + "/ a - " + answers[questionIndex]);
+        System.out.println("Питання - " + questionIndex + "/ відповідь - " + answers[questionIndex]);
 
         for (RadioButton button : answ_rbs) {
             button.setSelected(false);

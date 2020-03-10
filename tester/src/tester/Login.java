@@ -11,8 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,6 +34,11 @@ public class Login {
     final File folder_tests = new File("res/tests"); //Folder with tests
 
     public static String selectedTest;
+
+    public static String current_test;
+    public static String current_name;
+    public static String current_group;
+    public static String start_time;
 
     @FXML
     private AnchorPane rootPaneLogin;
@@ -65,7 +68,7 @@ public class Login {
 
         cmb_test.getSelectionModel().select(0);
 
-        txt_field_name.setText("Git Bush"); // DBG
+        txt_field_name.setText("Git Push"); // DBG
 
         btn_start.setOnAction(event -> {
             if (txt_field_name.getText().isEmpty()) {
@@ -81,15 +84,10 @@ public class Login {
                         i -> getNameWithoutExtension(i).equals(cmb_test.getSelectionModel().getSelectedItem())
                 ).collect(Collectors.toList()).get(0).getPath();
 
-                try (FileWriter writer = new FileWriter("res/students.txt", true))      // get name
-                {
-                    String name_str = txt_field_name.getText();
-                    String group_str = cmb_group.getSelectionModel().getSelectedItem();
-                    String current_time = myDateObj.format(myFormatObj);
-                    writer.append(name_str.trim()).append('n').append('\t').append(group_str).append('g').append('\t').append(current_time);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                current_name = txt_field_name.getText().trim();
+                current_group = cmb_group.getSelectionModel().getSelectedItem();
+                start_time = myDateObj.format(myFormatObj);
+                current_test = cmb_test.getSelectionModel().getSelectedItem();
 
                 try {
                     AnchorPane pane = FXMLLoader.load(getClass().getResource("fxml/test.fxml"));
