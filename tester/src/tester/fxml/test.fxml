@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #798#c5cae96cb;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
+<AnchorPane fx:id="rootPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="820.0" style="-fx-background-color: #ededed#ededed;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tester.Test">
    <children>
-      <Label fx:id="label_question" alignment="CENTER" layoutX="16.0" layoutY="109.0" prefHeight="368.0" prefWidth="573.0" style="-fx-background-color: #798#c5cae96cb;" textAlignment="LEFT" textFill="WHITE">
+      <Label fx:id="label_question" alignment="CENTER" layoutX="16.0" layoutY="109.0" prefHeight="368.0" prefWidth="573.0" style="-fx-background-color: #ededed;" textAlignment="LEFT">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>
@@ -21,20 +21,20 @@
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_question1" alignment="CENTER" layoutX="243.0" layoutY="11.0" prefHeight="36.0" prefWidth="337.0" text="Питання" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="label_question1" alignment="CENTER" layoutX="243.0" layoutY="11.0" prefHeight="36.0" prefWidth="337.0" text="Питання" textAlignment="CENTER">
          <font>
             <Font name="Calibri Light" size="22.0" />
          </font>
       </Label>
-      <RadioButton fx:id="answ_rb_0" layoutX="633.0" layoutY="137.0" mnemonicParsing="false" text="first answ" textFill="WHITE">
+      <RadioButton fx:id="answ_rb_0" layoutX="633.0" layoutY="137.0" mnemonicParsing="false" text="first answ">
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <RadioButton fx:id="answ_rb_1" contentDisplay="CENTER" layoutX="635.0" layoutY="282.0" mnemonicParsing="false" text="sec answ" textFill="WHITE">
+      <RadioButton fx:id="answ_rb_1" contentDisplay="CENTER" layoutX="635.0" layoutY="282.0" mnemonicParsing="false" text="sec answ">
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
-      <RadioButton fx:id="answ_rb_2" contentDisplay="RIGHT" layoutX="635.0" layoutY="409.0" mnemonicParsing="false" text="thrd" textFill="WHITE">
+      <RadioButton fx:id="answ_rb_2" contentDisplay="RIGHT" layoutX="635.0" layoutY="409.0" mnemonicParsing="false" text="thrd">
          <font>
             <Font name="Calibri Light" size="13.0" />
          </font></RadioButton>
@@ -42,7 +42,7 @@
          <font>
             <Font name="Calibri Light" size="16.0" />
          </font></Button>
-      <Label fx:id="label_time" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="61.0" prefHeight="30.0" prefWidth="206.0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="label_time" alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="61.0" prefHeight="30.0" prefWidth="206.0" textAlignment="CENTER">
          <font>
             <Font name="Calibri Light" size="14.0" />
          </font></Label>

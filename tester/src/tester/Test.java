@@ -114,7 +114,7 @@ public class Test {
             addAnswer(answers);
 
             String mark = result(answers) * 100 / q_count  + "%";
-            label_question.setText(mark);
+            label_question.setText("\t\tВаш результат - " + mark);
             label_question1.setText("Тест пройдено");
 
             //Add finish time + result in txt file
